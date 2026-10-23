@@ -56,7 +56,33 @@ document.getElementById('marketDay').style.color = m.color;
 document.getElementById('marketQuote').innerText = m.quote;
 document.getElementById('marketDate').innerText = today.toDateString() + " • Next: " + marketDays[(index+1)%4].name;
 </script>
-<!-- END LIVE TICKER + MARKET DAYS -->
+<!-- END LIVE TICKER + MARKET DAYS --> 
+  <!-- ATH COUNTDOWN BOX -->
+<style>
+.ath-box{ background: linear-gradient(135deg, #0a0a0a, #1a1a00); border:2px solid #FFD700; border-radius:16px; padding:20px; margin:20px auto; max-width:700px; text-align:center; color:#fff; }
+.ath-bar{ background:#333; height:20px; border-radius:10px; overflow:hidden; margin:12px 0; }
+.ath-fill{ background:linear-gradient(90deg, #00FF88, #FFD700); width:85%; height:100%; transition: width 1s; }
+.ath-numbers{ display:flex; justify-content:space-between; font-size:14px; }
+.ath-big{ font-size:28px; color:#FFD700; font-weight:800; }
+</style>
+
+<div class="ath-box">
+  <div style="font-size:14px; color:#00FF88;">🔥 BREAKING ATH SOON 🔥</div>
+  <div class="ath-big">📈 ATH COUNTDOWN</div>
+  <div style="margin-top:10px;">Current: <b>$10.4K</b> &nbsp;|&nbsp; ATH: <b>$12.2K</b></div>
+  <div class="ath-bar"><div class="ath-fill"></div></div>
+  <div class="ath-numbers">
+    <span>85% of ATH</span>
+    <span>Need: <b style="color:#FFD700;">$1.8K more</b></span>
+  </div>
+  <div style="margin-top:12px; font-size:15px; font-style:italic;">
+    "Eke Day Energy — We create the next ATH! 🚀"
+  </div>
+  <div style="margin-top:10px; font-size:12px; color:#aaa;">
+    Update MC as it pumps — Edit $10.4K to new price and bar % will rise!
+  </div>
+</div>
+<!-- END ATH COUNTDOWN -->
 <h1>CULTURE IS THE<br><span>NEW INDEX</span></h1>
 <p style="color:#888">$OMENALA - 21st Century Work - $6.65K MC</p>
 <div class="box"><code>AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</code><br><br><button class="btn" onclick="navigator.clipboard.writeText('AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump')">Copy Contract</button></div>
