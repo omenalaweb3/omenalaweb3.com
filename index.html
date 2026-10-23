@@ -13,7 +13,50 @@ h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.1;margin:0}h1 span{color:#00FF
 .ad{background:#111;border:1px dashed #333;padding:18px;border-radius:10px;margin:18px auto;max-width:620px}
 </style>
 </head>
-<body>
+<body> 
+  <!-- LIVE TICKER + IGBO MARKET DAYS -->
+<style>
+.ticker{ background:#00FF88; color:#000; padding:10px; overflow:hidden; white-space:nowrap; font-weight:700; font-size:14px; }
+.ticker span{ display:inline-block; animation: scroll 20s linear infinite; }
+@keyframes scroll{ from{ transform:translateX(100%);} to{ transform:translateX(-100%);} }
+.market-box{ background:#161616; border:1px solid gold; border-radius:12px; padding:20px; margin:20px auto; max-width:700px; text-align:center; }
+.market-day{ font-size:32px; color:gold; font-weight:700; }
+.quote{ font-size:18px; font-style:italic; color:#fff; margin-top:10px; }
+</style>
+
+<div class="ticker">
+  <span>🟢 LIVE: $OMENALA $6.65K MC • Eke • Orie • Afo • Nkwo • Culture is the New Index • omenalaweb3.com • AdSense Verified • Buy on pump.fun •</span>
+</div>
+
+<div class="market-box">
+  <div id="marketDay" class="market-day">Loading Market Day...</div>
+  <div style="color:#aaa; font-size:12px;">Igbo Four Market Days Cycle</div>
+  <div id="marketQuote" class="quote"></div>
+  <div id="marketDate" style="color:#888; font-size:12px; margin-top:10px;"></div>
+</div>
+
+<script>
+// Igbo Market Days - 4 day cycle starting from known reference
+// Eke = 0, Orie = 1, Afo = 2, Nkwo = 3
+const marketDays = [
+  { name: "EKE", emoji: "🌱", quote: "Eke Day: Today we create. Culture is born anew. 'Onye ajuru aju anaghi aju onwe ya' — He who is rejected by others has not rejected himself. Build your culture, build your future.", color: "#00FF88" },
+  { name: "ORIE", emoji: "🤝", quote: "Orie Day: Today we gather. Community is wealth. 'Igwe bu ike' — Unity is strength. Bring your tribe, share your story, trade your culture.", color: "#FFD700" },
+  { name: "AFO", emoji: "🧘", quote: "Afo Day: Today we rest and reflect. Wisdom is the market of elders. 'Omenala bu ike anyi' — Our culture is our power. Pause, learn, plan for $1B.", color: "#00D4FF" },
+  { name: "NKWO", emoji: "💰", quote: "Nkwo Day: Today we prosper. Market is full. 'Aku ruo ulo' — Wealth has reached home. Sell, celebrate, reward your community. Culture is the New Index!", color: "#FF6B00" }
+];
+
+// Calculate today's market day - cycles every 4 days
+const today = new Date();
+const dayOfYear = Math.floor((today - new Date(today.getFullYear(),0,0)) / (1000*60*60*24));
+const index = dayOfYear % 4;
+const m = marketDays[index];
+
+document.getElementById('marketDay').innerHTML = m.emoji + " " + m.name + " DAY";
+document.getElementById('marketDay').style.color = m.color;
+document.getElementById('marketQuote').innerText = m.quote;
+document.getElementById('marketDate').innerText = today.toDateString() + " • Next: " + marketDays[(index+1)%4].name;
+</script>
+<!-- END LIVE TICKER + MARKET DAYS -->
 <h1>CULTURE IS THE<br><span>NEW INDEX</span></h1>
 <p style="color:#888">$OMENALA - 21st Century Work - $6.65K MC</p>
 <div class="box"><code>AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</code><br><br><button class="btn" onclick="navigator.clipboard.writeText('AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump')">Copy Contract</button></div>
