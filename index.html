@@ -113,7 +113,60 @@ document.getElementById('marketDate').innerText = today.toDateString() + " • N
   <div id="points" style="text-align:center;">Your Points: <span id="pointCount">0</span> ⭐ | Come back tomorrow for +1</div>
 </div>
 
+<script> 
+  <!-- LIVE PRICE - Auto from DexScreener -->
+<style>
+.live-price-box{ background:#0a0a0a; border:2px solid #00FF88; border-radius:14px; padding:18px; margin:20px auto; max-width:700px; text-align:center; color:#fff; }
+.live-price{ font-size:32px; color:#00FF88; font-weight:800; }
+.live-mc{ font-size:18px; color:gold; font-weight:700; }
+.live-change{ font-size:14px; margin-top:6px; }
+</style>
+
+<div class="live-price-box">
+  <div style="font-size:12px; color:#aaa;">🟢 LIVE PRICE - Updated every 30 seconds</div>
+  <div id="livePrice" class="live-price">Loading price...</div>
+  <div id="liveMC" class="live-mc">MC: Loading...</div>
+  <div id="liveChange" class="live-change">24h Change: Loading...</div>
+  <div style="margin-top:10px;">
+    <a href="https://pump.fun/coin/AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump" target="_blank" style="background:#00FF88; color:#000; padding:10px 20px; border-radius:20px; font-weight:700; text-decoration:none;">🚀 BUY $OMENALA ON PUMP.FUN</a>
+    <a href="https://dexscreener.com/solana/AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump" target="_blank" style="background:#fff; color:#000; padding:10px 20px; border-radius:20px; font-weight:700; text-decoration:none; margin-left:8px;">📊 View on DexScreener</a>
+  </div>
+  <div style="font-size:11px; color:#666; margin-top:10px;">CA: AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</div>
+</div>
+
 <script>
+// LIVE PRICE FETCH
+const TOKEN = "AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
+async function fetchLivePrice(){
+  try{
+    const res = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${TOKEN}`);
+    const data = await res.json();
+    const pair = data.pairs && data.pairs[0];
+    if(pair){
+      const price = parseFloat(pair.priceUsd);
+      const mc = pair.marketCap;
+      const change = pair.priceChange?.h24 || 0;
+      document.getElementById('livePrice').innerText = "$" + price.toFixed(8);
+      document.getElementById('liveMC').innerText = "MC: $" + (mc >= 1000 ? (mc/1000).toFixed(1) + "K" : mc.toFixed(0)) + "  •  ATH: $12.2K";
+      document.getElementById('liveChange').innerText = "24h Change: " + change.toFixed(2) + "%  •  " + (change >=0 ? "🟢 UP" : "🔴 DOWN") + "  •  Liquidity: $" + Math.round(pair.liquidity?.usd || 0);
+      // Also update ticker text if exists
+      const ticker = document.querySelector('.ticker span');
+      if(ticker) ticker.innerText = `🟢 LIVE: $OMENALA $${(mc/1000).toFixed(1)}K MC • ATH $12.2K • Culture is the New Index • omenalaweb3.com • Buy on pump.fun • `;
+      // Update ATH progress
+      const pct = Math.min(100, (mc/12200)*100);
+      const fill = document.querySelector('.ath-fill');
+      if(fill) fill.style.width = pct + "%";
+    }else{
+      document.getElementById('livePrice').innerText = "$OMENALA $10.4K (Fallback)";
+    }
+  }catch(e){
+    document.getElementById('livePrice').innerText = "$OMENALA $10.4K MC - Live feed offline";
+  }
+}
+fetchLivePrice();
+setInterval(fetchLivePrice, 30000); // every 30 sec
+</script>
+<!-- END LIVE PRICE -->
 // 1. CHECK WALLET - Phantom
 async function checkWallet(){
   const msg = document.getElementById('walletMsg');
