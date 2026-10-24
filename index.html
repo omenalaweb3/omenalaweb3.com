@@ -246,6 +246,22 @@ async function loadHolders(){
 loadHolders();
 </script>
 <!-- END LEADERBOARD -->
+  <!-- DAO VOTING -->
+<div style="background:#0f0f0f; border:2px solid #00FF88; border-radius:14px; padding:18px; margin:20px auto; max-width:700px; color:#fff; text-align:center;">
+  <h3>🗳️ TRIBE DAO VOTE — You Decide!</h3>
+  <p>Should next OMENALA ad be for <b>Music</b> or <b>Fashion</b>?</p>
+  <button onclick="voteDAO('music')" style="background:#00FF88; padding:10px 20px; border-radius:20px; font-weight:700;">🎵 Music</button>
+  <button onclick="voteDAO('fashion')" style="background:gold; padding:10px 20px; border-radius:20px; font-weight:700; margin-left:8px;">👗 Fashion</button>
+  <div id="daoResult" style="margin-top:12px; font-size:14px;">Music: 0 • Fashion: 0</div>
+  <p style="font-size:11px; color:#666;">1 wallet = 1 vote • Real on-chain voting coming soon with $OMENALA staking</p>
+</div>
+<script>
+let votes = JSON.parse(localStorage.getItem('omenala_votes') || '{"music":0,"fashion":0}');
+function showVotes(){ document.getElementById('daoResult').innerText = `Music: ${votes.music} • Fashion: ${votes.fashion} • Total: ${votes.music+votes.fashion}`; }
+function voteDAO(choice){ if(localStorage.getItem('omenala_voted')){ alert('You already voted today!'); return; } votes[choice]++; localStorage.setItem('omenala_votes', JSON.stringify(votes)); localStorage.setItem('omenala_voted', new Date().toDateString()); showVotes(); }
+showVotes();
+</script>
+<!-- END DAO -->
 <h1>CULTURE IS THE<br><span>NEW INDEX</span></h1>
 <p style="color:#888">$OMENALA - 21st Century Work - $10.4K MC</p>
 <div class="box"><code>AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</code><br><br><button class="btn" onclick="navigator.clipboard.writeText('AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump')">Copy Contract</button></div>
