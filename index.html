@@ -57,6 +57,7 @@ document.getElementById('marketQuote').innerText = m.quote;
 document.getElementById('marketDate').innerText = today.toDateString() + " • Next: " + marketDays[(index+1)%4].name;
 </script>
 <!-- END LIVE TICKER + MARKET DAYS --> 
+  <script> 
   <!-- ATH COUNTDOWN BOX -->
 <style>
 .ath-box{ background: linear-gradient(135deg, #0a0a0a, #1a1a00); border:2px solid #FFD700; border-radius:16px; padding:20px; margin:20px auto; max-width:700px; text-align:center; color:#fff; }
@@ -83,6 +84,7 @@ document.getElementById('marketDate').innerText = today.toDateString() + " • N
   </div>
 </div>
 <!-- END ATH COUNTDOWN -->
+
   <!-- NEWS FEED + INTERACTIVE BUTTONS -->
 <style>
 .news-box{ background:#0f0f0f; border:1px solid #333; border-radius:12px; padding:18px; margin:20px auto; max-width:700px; color:#fff; }
@@ -167,6 +169,7 @@ fetchLivePrice();
 setInterval(fetchLivePrice, 30000); // every 30 sec
 </script>
 <!-- END LIVE PRICE -->
+  <script> 
 // 1. CHECK WALLET - Phantom
 async function checkWallet(){
   const msg = document.getElementById('walletMsg');
