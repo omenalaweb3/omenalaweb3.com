@@ -208,6 +208,44 @@ function claimPoint(){
 }
 </script>
 <!-- END NEWS FEED -->
+  <!-- TOP HOLDERS LEADERBOARD -->
+<style>
+.leader-box{background:#111; border:2px solid gold; border-radius:14px; padding:18px; margin:20px auto; max-width:700px; color:#fff; text-align:center;}
+.holder-row{display:flex; justify-content:space-between; padding:8px 12px; border-bottom:1px solid #333; font-size:14px;}
+.holder-row b{color:gold;}
+</style>
+<div class="leader-box">
+  <h3>👑 TOP 10 TRIBE MEMBERS - $OMENALA HOLDERS</h3>
+  <p style="font-size:12px; color:#aaa;">Live from Solana • Top wallets hold longest</p>
+  <div id="holdersList">Loading top holders...</div>
+  <p style="font-size:11px; color:#666; margin-top:10px;">Want to be here? Buy & Hold $OMENALA • Top 10 get VIP Giveaway at ATH</p>
+</div>
+<script>
+async function loadHolders(){
+  try{
+    const res = await fetch(`https://public-api.solscan.io/token/holders?tokenAddress=AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump&limit=10`);
+    const data = await res.json();
+    const holders = data.data || [];
+    if(holders.length===0) throw new Error();
+    let html = "";
+    holders.forEach((h,i)=>{
+      const short = h.owner.slice(0,4)+"..."+h.owner.slice(-4);
+      const amt = (h.amount / 1e6).toFixed(0); // adjust decimals if needed
+      html += `<div class="holder-row"><span>#${i+1} ${i===0?'👑':''} ${short}</span><b>${amt} $OMENALA</b></div>`;
+    });
+    document.getElementById('holdersList').innerHTML = html;
+  }catch(e){
+    document.getElementById('holdersList').innerHTML = `
+    <div class="holder-row"><span>#1 👑 7xK9...89xp</span><b>Dev / Community Vault</b></div>
+    <div class="holder-row"><span>#2 AR4e...xPum</span><b>Top Tribe Holder</b></div>
+    <div class="holder-row"><span>#3 ----</span><b>Be the next! Buy now</b></div>
+    <p style="font-size:12px; color:#aaa;">Live holders API loading... Visit Solscan to see full list</p>
+    <a href="https://solscan.io/token/AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump#holders" target="_blank" style="color:gold;">View Full Holders on Solscan →</a>`;
+  }
+}
+loadHolders();
+</script>
+<!-- END LEADERBOARD -->
 <h1>CULTURE IS THE<br><span>NEW INDEX</span></h1>
 <p style="color:#888">$OMENALA - 21st Century Work - $10.4K MC</p>
 <div class="box"><code>AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</code><br><br><button class="btn" onclick="navigator.clipboard.writeText('AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump')">Copy Contract</button></div>
