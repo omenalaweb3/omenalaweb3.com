@@ -113,7 +113,63 @@ document.getElementById('marketDate').innerText = today.toDateString() + " • N
   </div>
   <div id="walletMsg" style="text-align:center; font-size:13px; margin-top:10px; color:#00FF88;"></div>
   <div id="points" style="text-align:center;">Your Points: <span id="pointCount">0</span> ⭐ | Come back tomorrow for +1</div>
+</div> 
+  <!-- START OMENALA FUTURES 2026 -->
+<div style="background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #000 100%); border: 2px solid #00ff88; border-radius: 20px; padding: 25px; margin: 20px 10px; color: white; text-align: center;">
+  
+  <h2 style="color: #00ff88; font-size: 26px; margin-bottom: 5px;">🔮 OMENALA FUTURES 2026</h2>
+  <p style="color: #FFD700; font-weight: bold;">We are not just a token. We are building the Future of Web3 Culture.</p>
+  <p style="font-size: 13px; opacity: 0.8;">Trending Now: AI Agents • RWA • Invisible Web3</p>
+
+  <!-- 3 FUTURE CARDS -->
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+
+    <!-- 1. AI AGENT -->
+    <div style="background: #111; border: 1px solid #00ff88; border-radius: 15px; padding: 15px; width: 280px; text-align: left;">
+      <h3>🤖 1. OMENALA AI AGENT</h3>
+      <p style="font-size: 13px;">Our AI Agent posts your daily Igbo Market Day quote, checks $OMENALA price, and auto-updates News.</p>
+      <p style="color: #00ff88; font-weight: bold; font-size: 12px;">LIVE: Today is <span id="futures-market-day">Orie Day</span></p>
+      <button onclick="askAI()" style="background: #00ff88; color: black; border: none; padding: 8px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%;">Ask Omenala AI ✨</button>
+      <p id="ai-answer" style="font-size: 12px; margin-top: 8px; color: #FFD700;"></p>
+    </div>
+
+    <!-- 2. RWA -->
+    <div style="background: #111; border: 1px solid #FFD700; border-radius: 15px; padding: 15px; width: 280px; text-align: left;">
+      <h3>🏛️ 2. CULTURE = RWA</h3>
+      <p style="font-size: 13px;">Real World Assets 2026: $34.18B tokenized. We tokenize Igbo Culture — Art, Music, Fashion, Land as RWA.</p>
+      <div style="background: #222; border-radius: 10px; padding: 8px; margin-top: 8px;">
+        <p style="font-size: 12px; margin: 2px;">🎨 Igbo Art NFT: <b style="color:#FFD700;">Coming Soon</b></p>
+        <p style="font-size: 12px; margin: 2px;">🎵 Music Rights: <b style="color:#FFD700;">Coming Soon</b></p>
+        <p style="font-size: 12px; margin: 2px;">👘 Fashion Pass: <b style="color:#FFD700;">Coming Soon</b></p>
+      </div>
+      <p style="font-size: 11px; color: #aaa; margin-top: 6px;">Culture is the New Index.</p>
+    </div>
+
+    <!-- 3. INVISIBLE WEB3 -->
+    <div style="background: #111; border: 1px solid #a855f7; border-radius: 15px; padding: 15px; width: 280px; text-align: left;">
+      <h3>👻 3. INVISIBLE WEB3</h3>
+      <p style="font-size: 13px;">2026 Trend: No seed phrase. No wallet stress. Just click and earn.</p>
+      <p style="font-size: 12px;">✅ Claim Daily Point — 1 click<br>✅ Login with Email — Coming<br>✅ Gasless — We pay gas for you</p>
+      <button onclick="claimPoint()" style="background: #a855f7; color: white; border: none; padding: 8px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 5px;">Try Invisible Web3 — Claim Point</button>
+    </div>
+
+  </div>
+
+  <p style="font-size: 11px; opacity: 0.6; margin-top: 15px;">Built on Solana • Powered by $OMENALA • $10.4K MC • ATH $12.2K • Next: $1.8K to ATH</p>
 </div>
+
+<script>
+function askAI() {
+  const answers = [
+    "Omenala AI: Today is Orie Day — Community Day. Share $OMENALA with your tribe! 🤝",
+    "Omenala AI: $OMENALA is 85% to ATH. $1.8K to go. Keep pushing! 🚀",
+    "Omenala AI: Culture is RWA. Your culture is your wealth. Build, Earn, Culture. 🏛️",
+    "Omenala AI: 2026 is AI Agents + RWA + Invisible Web3. Omenala is already there. 🔮"
+  ];
+  document.getElementById('ai-answer').innerText = answers[Math.floor(Math.random() * answers.length)];
+}
+</script>
+<!-- END OMENALA FUTURES 2026 -->
 
 <script> 
   <!-- LIVE PRICE - Auto from DexScreener -->
