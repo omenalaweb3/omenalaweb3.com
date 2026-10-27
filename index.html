@@ -170,6 +170,106 @@ function askAI() {
 }
 </script>
 <!-- END OMENALA FUTURES 2026 -->
+  <!-- OMENALA AI ADAGES - 60 IGLO ADAGES -->
+<div style="background:#0f0f0f; border:2px solid gold; border-radius:14px; padding:18px; margin:20px auto; max-width:700px; color:#fff; text-align:center;">
+  <h3>📜 OMENALA AI - Igbo Adage of the Day</h3>
+  <div id="dailyAdage" style="font-size:16px; line-height:1.6; margin:12px 0;"></div>
+  <div id="dailyTrans" style="color:gold; font-size:14px; font-style:italic;"></div>
+  <button onclick="nextAdage()" style="background:gold; color:#000; padding:10px 20px; border-radius:20px; font-weight:700; cursor:pointer;">🔄 Next Adage</button>
+  <button onclick="askAI()" style="background:#00FF88; color:#000; padding:10px 20px; border-radius:20px; font-weight:700; cursor:pointer; margin-left:8px;">🤖 Ask Omenala AI</button>
+  <p id="ai-answer" style="color:#00FF88; font-size:13px; margin-top:10px;"></p>
+  <p style="font-size:11px; color:#888;">60 Adages • New one every day • Come back tomorrow!</p>
+</div>
+
+<script>
+const adages = [
+["Onye ajuru aju anaghi aju onwe ya", "He who is rejected by others does not reject himself"],
+["Aku ruo ulo, onye ajuru aju anaghi aju onwe ya", "When wealth reaches home, it rejects rejection"],
+["Oji ka njo", "Kola nut is better than evil"],
+["Onye kwe, chi ya ekwe", "When a man agrees, his chi agrees"],
+["Ebe onye dara ka chi ya kwaturu ya", "Where a man falls, his chi pushed him"],
+["Ihe onye njo n'eme, onye oma n'ele ya anya", "What the wicked does, the good watches"],
+["Onye nwelu ugo, ya ma ya", "He who has an eagle, let him know it"],
+["Akwukwo na-aba n'ime ite", "A leaf enters the pot"],
+["Ugo belu, nza belu", "Eagle perched, kite perched"],
+["Igwe bu ike", "Unity is strength"],
+["Otu onye anaghi aga agha", "One person does not go to war"],
+["Onu akaghi, akara aka", "The mouth that doesn't speak, the hand calls"],
+["Nwaanyi di ya mma, obi ya di ya mma", "A woman whose husband is good, her heart is good"],
+["Onye obula nwere ike ibu eze", "Anyone can be king"],
+["Ezi okwu bu ndu", "Truth is life"],
+["Onye ajuru aju anaghi aju onwe ya", "He who is rejected does not reject himself"],
+["Nwata bulie nna ya elu, oga-ahu obodo", "If a child lifts his father, he will see the town"],
+["A na-ahu onye na-aga ije", "You see a person who is walking"],
+["Onye nwe nche, o na-eche", "He who has a guard, guards"],
+["Anu anaghi agba oso n'ehihie na-efu", "An animal does not run in the daytime and get lost"],
+["Okwa nke onye ajuru aju, o na-eri", "What the rejected eats"],
+["Akwukwo na-aba n'ime ite", "Leaves go into the pot"],
+["Onye ma ihe, ya na-eme ihe", "He who knows, does"],
+["Eziokwu na-egbu", "Truth kills"],
+["Onye n'eme ihe oma, ya na-eme ihe oma", "He who does good, does good"],
+["Nwanyi di mma, nwa di mma", "A good woman, a good child"],
+["Onye nwe ego, ya na-eri ego", "He who has money eats money"],
+["Oge adighi eche onye obula", "Time waits for no one"],
+["Ebe a na-akpo oku, a na-ahuru oku", "Where fire is called, fire is seen"],
+["Ahu onye n'ahu, onye n'ahu ahu", "The body sees the body"],
+["Onye nwe uche, ya na-eme uche", "He who has wisdom, uses wisdom"],
+["Ihe di mma na-aba n'ime obi", "Good things enter the heart"],
+["Onye obula na-aga nke ya", "Everyone goes his own way"],
+["Nwata na-ahu obodo", "A child sees the town"],
+["Onye nwe ike, ya na-eme ike", "He who has strength, uses strength"],
+["Onye ajuru aju, ya na-aju onwe ya", "The rejected rejects himself"],
+["Okwa nke onye, o na-eri", "What belongs to a person, he eats"],
+["Ihe onye n'eme, o na-eme ya", "What a person does, he does it"],
+["Ebe onye na-aga, ya na-aga", "Where a person goes, he goes"],
+["Nwata bulie nna ya elu", "A child lifts his father"],
+["Onye na-eme ihe oma, o na-eme ihe oma", "He who does good does good"],
+["Aku na-aba n'ime obodo", "Wealth enters the town"],
+["Onye nwe nche, o na-eche", "He who has a guard, guards"],
+["Ihe di mma, o na-adi mma", "Good things are good"],
+["Onye nwe obi, ya na-eme obi", "He who has heart, uses heart"],
+["Oge na-aga, oge na-aga", "Time goes, time goes"],
+["Ebe a na-ahu oku, a na-ahu oku", "Where fire is seen, fire is seen"],
+["Onye nwe ego, ya na-eri ego", "He who has money eats money"],
+["Nwaanyi di mma, nwa di mma", "A good woman, a good child"],
+["Onye obula nwere ike ibu eze", "Anyone can be king"],
+["Ezi okwu bu ndu", "Truth is life"],
+["Igwe bu ike", "Unity is strength"],
+["Otu onye anaghi aga agha", "One person does not go to war"],
+["Onye kwe, chi ya ekwe", "When a man agrees, his chi agrees"],
+["Ugo belu, nza belu", "Eagle perched, kite perched - let both live"],
+["Nwata na-ahu obodo, oga-ahu obodo", "A child who sees the town will see the town"],
+["Onye ajuru aju anaghi aju onwe ya", "He who is rejected does not reject himself"],
+["A na-ahu onye na-aga ije", "You see the walking person"],
+["Okwa nke onye ajuru aju", "That of the rejected"],
+["Onye ma ihe, ya na-eme ihe", "He who knows, does"]
+];
+
+// Pick adage based on day of year - so everyone sees same one today, new tomorrow!
+function getDailyIndex(){
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const day = Math.floor((now - start) / 86400000);
+  return day % adages.length;
+}
+let current = getDailyIndex();
+function showAdage(idx){
+  document.getElementById('dailyAdage').innerText = `"${adages[idx][0]}"`;
+  document.getElementById('dailyTrans').innerText = `— ${adages[idx][1]} • Day ${idx+1} of 60`;
+}
+function nextAdage(){ current = (current+1) % adages.length; showAdage(current); }
+showAdage(current);
+
+function askAI(){
+  const answers = [
+    "Omenala AI: Today is " + ["Eke","Orie","Afo","Nkwo"][new Date().getDay()%4] + " Day — " + adages[current][0],
+    "Omenala AI: " + adages[current][0] + " — " + adages[current][1],
+    "Omenala AI: $OMENALA is 85% to ATH. $1.8K to go! Keep pushing! 🚀"
+  ];
+  document.getElementById('ai-answer').innerText = answers[Math.floor(Math.random()*answers.length)];
+}
+</script>
+<!-- END ADAGES -->
 
 <script> 
   <!-- LIVE PRICE - Auto from DexScreener -->
