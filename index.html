@@ -70,17 +70,19 @@ document.getElementById('marketDate').innerText = today.toDateString() + " • N
   <p style="font-size:12px; margin-top:10px;">Today's Market Day: <span id="elementDay">Loading...</span></p>
 </div>
 <script>
-const days = [
+const marketDays2 = [
   {name:"Eke", el:"🔥 FIRE — Creation"},
   {name:"Orie", el:"💧 WATER — Community"},
   {name:"Afo", el:"🌍 EARTH — Wisdom"},
   {name:"Nkwo", el:"🌬️ AIR — Prosperity"}
 ];
-// Simple cycle: Eke=0, Orie=1, Afo=2, Nkwo=3 based on day number
-const d = new Date().getDate() % 4;
-document.getElementById('elementDay').innerText = days[d].name + " • " + days[d].el;
+// Use SAME method as top box - Oct 27 2026 was Eke
+const base = new Date(2026, 9, 27);
+const today2 = new Date(); today2.setHours(0,0,0,0);
+const diff = Math.floor((today2 - base) / 86400000);
+const idx2 = ((diff % 4) + 4) % 4;
+document.getElementById('elementDay').innerText = marketDays2[idx2].name + " • " + marketDays2[idx2].el;
 </script>
-<!-- END MARKET DAYS ELEMENTS -->
 
   <!-- ATH COUNTDOWN BOX -->
 <style>
