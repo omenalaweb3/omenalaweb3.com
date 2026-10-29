@@ -370,6 +370,32 @@ fetchLivePrice();
 setInterval(fetchLivePrice, 30000); // every 30 sec
 </script>
 <!-- END LIVE PRICE -->
+  <!-- MULTI-WALLET ADAPTER - Solana Official -->
+<script src="https://unpkg.com/@solana/web3.js@1.95.0/lib/index.iife.min.js"></script>
+<script src="https://unpkg.com/@solana/wallet-adapter-base@0.9.27/lib/index.iife.min.js"></script>
+<script src="https://unpkg.com/@solana/wallet-adapter-wallets@0.19.26/lib/index.iife.min.js"></script>
+<script>
+const { Connection, PublicKey } = solanaWeb3;
+const { PhantomWalletAdapter, SolflareWalletAdapter, BackpackWalletAdapter } = SolanaWalletAdapterWallets;
+
+const wallets = [
+  new PhantomWalletAdapter(),
+  new SolflareWalletAdapter(),
+  new BackpackWalletAdapter()
+];
+
+let wallet = null;
+async function connectWallet() {
+  // Try Phantom first, if not found show choose
+  const choice = prompt("Choose wallet: 1=Phantom, 2=Solflare, 3=Backpack");
+  const idx = parseInt(choice) - 1;
+  wallet = wallets[idx] || wallets[0];
+  await wallet.connect();
+  const addr = wallet.publicKey.toString();
+  document.getElementById('walletAddr').innerText = "Connected: " + addr.slice(0,4) + "..." + addr.slice(-4);
+  alert("Wallet Connected! " + addr);
+}
+</script>
   <script> 
 // 1. CHECK WALLET - Phantom
 async function checkWallet(){
