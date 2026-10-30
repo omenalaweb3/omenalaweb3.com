@@ -386,19 +386,29 @@ async function connectWallet(){
 }
 </script>
   <!-- STANDARD WEB3 WALLET ADAPTER -->
-// 1. CHECK WALLET - Phantom
+<script>
+// 1. CHECK WALLET - Multi-Wallet (Phantom + Solflare + Backpack)
 async function checkWallet(){
   const msg = document.getElementById('walletMsg');
-  if(window.solana && window.solana.isPhantom){
-    try{
-      const resp = await window.solana.connect();
-      msg.innerText = "Connected: " + resp.publicKey.toString().slice(0,6) + "..." + resp.publicKey.toString().slice(-4) + " — Welcome to Omenala Tribe!";
-    }catch(e){ msg.innerText = "Connection cancelled"; }
-  }else{
-    msg.innerText = "Install Phantom Wallet to connect! phantom.app — Then refresh.";
-    window.open("https://phantom.app/", "_blank");
-  }
+  let wallet = null; let name = "";
+  if (window.solana && window.solana.isPhantom) { wallet = window.solana; name = "Phantom"; }
+  else if (window.solflare && window.solflare.isSolflare) { wallet = window.solflare; name = "Solflare"; }
+  else if (window.backpack) { wallet = window.backpack; name = "Backpack"; }
+  else if (window.solana) { wallet = window.solana; name = "Solana"; }
 
+  if (!wallet) {
+    msg.innerText = "Install Phantom, Solflare or Backpack to connect!";
+    window.open("https://phantom.app/", "_blank");
+    return;
+  }
+  try{
+    const resp = await wallet.connect();
+    const addr = resp.publicKey.toString();
+    msg.innerText = "Connected ("+name+"): " + addr.slice(0,6)+"..."+addr.slice(-4)+" — Welcome to Omenala Tribe!";
+  }catch(e){
+    msg.innerText = "Connection cancelled";
+  }
+}
 
 // 2. SHARE ON X - 1 click tweet
 function shareX(){
@@ -413,14 +423,15 @@ function claimPoint(){
   const today = new Date().toDateString();
   const last = localStorage.getItem('omenala_last_claim');
   if(last === today){
-    document.getElementById('walletMsg').innerText = "Already claimed today! Come back tomorrow on " + "Orie/Afo/Nkwo Day!";
+    const dayName = document.getElementById('elementDay') ? document.getElementById('elementDay').innerText : "Orie Day";
+    document.getElementById('walletMsg').innerText = "Already claimed today! Come back tomorrow on " + dayName + "!";
     return;
   }
   pts++;
   localStorage.setItem('omenala_pts', pts);
   localStorage.setItem('omenala_last_claim', today);
   document.getElementById('pointCount').innerText = pts;
-  document.getElementById('walletMsg').innerText = "🎉 +1 Point Claimed! You now have " + pts + " points. Eke Day Energy!";
+  document.getElementById('walletMsg').innerText = "🎉 +1 Point Claimed! You now have " + pts + " points. " + (document.getElementById('elementDay') ? document.getElementById('elementDay').innerText : "Eke Day") + " Energy!";
 }
 </script>
 <!-- END NEWS FEED -->
