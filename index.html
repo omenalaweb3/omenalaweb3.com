@@ -365,7 +365,6 @@ async function fetchLivePrice(){
   }catch(e){
     document.getElementById('livePrice').innerText = "$OMENALA $10.4K MC - Live feed offline";
   }
-}
 fetchLivePrice();
 setInterval(fetchLivePrice, 30000); // every 30 sec
 </script>
@@ -387,15 +386,6 @@ async function connectWallet(){
 }
 </script>
   <!-- STANDARD WEB3 WALLET ADAPTER -->
-<link rel="stylesheet" href="https://unpkg.com/@solana/wallet-adapter-react-ui@0.9.35/styles.css" />
-<script type="module">
-import React from "https://esm.sh/react@18?external=react";
-import { ConnectionProvider, WalletProvider } from "https://esm.sh/@solana/wallet-adapter-react@0.15.35?external=react";
-import { WalletModalProvider, WalletMultiButton } from "https://esm.sh/@solana/wallet-adapter-react-ui@0.9.35?external=react";
-import { PhantomWalletAdapter, SolflareWalletAdapter } from "https://esm.sh/@solana/wallet-adapter-wallets@0.19.32?external=react";
-// This will render a professional "Select Wallet" button
-</script>
-  <script> 
 // 1. CHECK WALLET - Phantom
 async function checkWallet(){
   const msg = document.getElementById('walletMsg');
