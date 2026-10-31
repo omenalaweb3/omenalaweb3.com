@@ -337,29 +337,12 @@ function askAI(){
   <div style="font-size:11px; color:#666; margin-top:10px;">CA: AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</div>
 </div>
 
-<script>
-async function fetchLivePrice(){
-  const CA="AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
-  try{
-    // Use pump.fun API - works for bonding curve coins
-    const res=await fetch(`https://frontend-api.pump.fun/coins/${CA}`);
-    const data=await res.json();
-    const mc=data.usd_market_cap||10400;
-    const el=document.getElementById('live-mc');
-    if(el) el.innerText=`$OMENALA - 21st Century Work - $${(mc/1000).toFixed(1)}K MC LIVE`;
-    const ath=12200;
-    const rem=ath-mc;
-    const athEl=document.getElementById('ath-countdown');
-    if(athEl){
-      if(rem>0) athEl.innerText=`$${(rem/1000).toFixed(1)}K to ATH $12.2K`;
-      else athEl.innerText="🚀 NEW ATH!";
-    }
-  }catch(e){
-    console.log("pump API fail, using $10.4K");
-  }
-}
-setInterval(fetchLivePrice,30000);
-fetchLivePrice();
+  <script>
+// Simple Live Price - No API, static $10.4K for now
+const mcEl=document.getElementById('liveMC');
+if(mcEl) mcEl.innerText='MC: $10.4K LIVE';
+const priceEl=document.getElementById('livePrice');
+if(priceEl) priceEl.innerText='$10.4K MC';
 </script>
 <!-- END LIVE PRICE -->
 <script>
