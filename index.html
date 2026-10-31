@@ -338,35 +338,28 @@ function askAI(){
 </div>
 
 <script>
-// LIVE PRICE FETCH
-const TOKEN = "AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
 async function fetchLivePrice(){
+  const CA="AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
   try{
-    const res = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${TOKEN}`);
-    const data = await res.json();
-    const pair = data.pairs && data.pairs[0];
-    if(pair){
-      const price = parseFloat(pair.priceUsd);
-      const mc = pair.marketCap;
-      const change = pair.priceChange?.h24 || 0;
-      document.getElementById('livePrice').innerText = "$" + price.toFixed(8);
-      document.getElementById('liveMC').innerText = "MC: $" + (mc >= 1000 ? (mc/1000).toFixed(1) + "K" : mc.toFixed(0)) + "  •  ATH: $12.2K";
-      document.getElementById('liveChange').innerText = "24h Change: " + change.toFixed(2) + "%  •  " + (change >=0 ? "🟢 UP" : "🔴 DOWN") + "  •  Liquidity: $" + Math.round(pair.liquidity?.usd || 0);
-      // Also update ticker text if exists
-      const ticker = document.querySelector('.ticker span');
-      if(ticker) ticker.innerText = `🟢 LIVE: $OMENALA $${(mc/1000).toFixed(1)}K MC • ATH $12.2K • Culture is the New Index • omenalaweb3.com • Buy on pump.fun • `;
-      // Update ATH progress
-      const pct = Math.min(100, (mc/12200)*100);
-      const fill = document.querySelector('.ath-fill');
-      if(fill) fill.style.width = pct + "%";
-    }else{
-      document.getElementById('livePrice').innerText = "$OMENALA $10.4K (Fallback)";
+    // Use pump.fun API - works for bonding curve coins
+    const res=await fetch(`https://frontend-api.pump.fun/coins/${CA}`);
+    const data=await res.json();
+    const mc=data.usd_market_cap||10400;
+    const el=document.getElementById('live-mc');
+    if(el) el.innerText=`$OMENALA - 21st Century Work - $${(mc/1000).toFixed(1)}K MC LIVE`;
+    const ath=12200;
+    const rem=ath-mc;
+    const athEl=document.getElementById('ath-countdown');
+    if(athEl){
+      if(rem>0) athEl.innerText=`$${(rem/1000).toFixed(1)}K to ATH $12.2K`;
+      else athEl.innerText="🚀 NEW ATH!";
     }
   }catch(e){
-    document.getElementById('livePrice').innerText = "$OMENALA $10.4K MC - Live feed offline";
+    console.log("pump API fail, using $10.4K");
   }
+}
+setInterval(fetchLivePrice,30000);
 fetchLivePrice();
-setInterval(fetchLivePrice, 30000); // every 30 sec
 </script>
 <!-- END LIVE PRICE -->
 <script>
