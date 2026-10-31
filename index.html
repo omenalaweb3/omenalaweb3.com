@@ -369,66 +369,47 @@ fetchLivePrice();
 setInterval(fetchLivePrice, 30000); // every 30 sec
 </script>
 <!-- END LIVE PRICE -->
-<!-- MULTI-WALLET - Simple Detector that WORKS -->
-async function connectWallet(){
-  let wallet = null; let name = "";
-  if (window.solana && window.solana.isPhantom) { wallet = window.solana; name = "Phantom"; }
-  else if (window.solflare && window.solflare.isSolflare) { wallet = window.solflare; name = "Solflare"; }
-  else if (window.backpack) { wallet = window.backpack; name = "Backpack"; }
-  else if (window.solana) { wallet = window.solana; name = "Solana Wallet"; }
-  if (!wallet) { alert("No Solana wallet found! Install Phantom, Solflare or Backpack, then try again."); window.open("https://phantom.app/", "_blank"); return; }
-  try{
-    const resp = await wallet.connect();
-    const addr = resp.publicKey.toString();
-    document.getElementById('walletAddr').innerText = "Connected ("+name+"): " + addr.slice(0,4)+"..."+addr.slice(-4);
-  }catch(e){ alert("Connection cancelled"); }
-}
-</script>
-  <!-- STANDARD WEB3 WALLET ADAPTER -->
-// 1. CHECK WALLET - Multi-Wallet (Phantom + Solflare + Backpack)
+<script>
+// 1. MULTI-WALLET - Phantom + Solflare + Backpack
 async function checkWallet(){
-  const msg = document.getElementById('walletMsg');
-  let wallet = null; let name = "";
-  if (window.solana && window.solana.isPhantom) { wallet = window.solana; name = "Phantom"; }
-  else if (window.solflare && window.solflare.isSolflare) { wallet = window.solflare; name = "Solflare"; }
-  else if (window.backpack) { wallet = window.backpack; name = "Backpack"; }
-  else if (window.solana) { wallet = window.solana; name = "Solana"; }
-
-  if (!wallet) {
-    msg.innerText = "Install Phantom, Solflare or Backpack to connect!";
-    window.open("https://phantom.app/", "_blank");
-    return;
+  const msg=document.getElementById('walletMsg');
+  let wallet=null; let name="";
+  if(window.solana&&window.solana.isPhantom){wallet=window.solana;name="Phantom";}
+  else if(window.solflare&&window.solflare.isSolflare){wallet=window.solflare;name="Solflare";}
+  else if(window.backpack){wallet=window.backpack;name="Backpack";}
+  else if(window.solana){wallet=window.solana;name="Solana";}
+  if(!wallet){
+    msg.innerText="Install Phantom, Solflare or Backpack to connect!";
+    window.open("https://phantom.app/","_blank"); return;
   }
   try{
-    const resp = await wallet.connect();
-    const addr = resp.publicKey.toString();
-    msg.innerText = "Connected ("+name+"): " + addr.slice(0,6)+"..."+addr.slice(-4)+" — Welcome to Omenala Tribe!";
-  }catch(e){
-    msg.innerText = "Connection cancelled";
-  }
-
-// 2. SHARE ON X - 1 click tweet
-function shareX(){
-  const text = encodeURIComponent("$OMENALA at $10.4K — $1.8K from ATH $12.2K! Culture is the New Index 🚀 www.omenalaweb3.com #OMENALA #Solana");
-  window.open("https://twitter.com/intent/tweet?text=" + text, "_blank");
+    const resp=await wallet.connect();
+    const addr=resp.publicKey.toString();
+    msg.innerText="Connected ("+name+"): "+addr.slice(0,6)+"..."+addr.slice(-4)+" — Welcome!";
+  }catch(e){ msg.innerText="Connection cancelled"; }
 }
-
-// 3. CLAIM DAILY POINT - saves in browser
-let pts = parseInt(localStorage.getItem('omenala_pts') || 0);
-document.getElementById('pointCount').innerText = pts;
+// 2. SHARE ON X
+function shareX(){
+  const text=encodeURIComponent("$OMENALA at $10.4K — $1.8K from ATH $12.2K! Culture is the New Index www.omenalaweb3.com #OMENALA #Solana");
+  window.open("https://twitter.com/intent/tweet?text="+text,"_blank");
+}
+// 3. CLAIM DAILY POINT
+let pts=parseInt(localStorage.getItem('omenala_pts')||0);
+const pc=document.getElementById('pointCount');
+if(pc) pc.innerText=pts;
 function claimPoint(){
-  const today = new Date().toDateString();
-  const last = localStorage.getItem('omenala_last_claim');
-  if(last === today){
-    const dayName = document.getElementById('elementDay') ? document.getElementById('elementDay').innerText : "Orie Day";
-    document.getElementById('walletMsg').innerText = "Already claimed today! Come back tomorrow on " + dayName + "!";
+  const today=new Date().toDateString();
+  const last=localStorage.getItem('omenala_last_claim');
+  if(last===today){
+    const dayName=document.getElementById('elementDay')?document.getElementById('elementDay').innerText:"Orie Day";
+    document.getElementById('walletMsg').innerText="Already claimed today! Come back tomorrow on "+dayName+"!";
     return;
   }
   pts++;
-  localStorage.setItem('omenala_pts', pts);
-  localStorage.setItem('omenala_last_claim', today);
-  document.getElementById('pointCount').innerText = pts;
-  document.getElementById('walletMsg').innerText = "🎉 +1 Point Claimed! You now have " + pts + " points. " + (document.getElementById('elementDay') ? document.getElementById('elementDay').innerText : "Eke Day") + " Energy!";
+  localStorage.setItem('omenala_pts',pts);
+  localStorage.setItem('omenala_last_claim',today);
+  document.getElementById('pointCount').innerText=pts;
+  document.getElementById('walletMsg').innerText="🎉 +1 Point Claimed! You now have "+pts+" points!";
 }
 </script>
 <!-- END NEWS FEED -->
