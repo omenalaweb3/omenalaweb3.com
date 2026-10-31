@@ -370,7 +370,6 @@ setInterval(fetchLivePrice, 30000); // every 30 sec
 </script>
 <!-- END LIVE PRICE -->
 <!-- MULTI-WALLET - Simple Detector that WORKS -->
-<script>
 async function connectWallet(){
   let wallet = null; let name = "";
   if (window.solana && window.solana.isPhantom) { wallet = window.solana; name = "Phantom"; }
@@ -386,7 +385,6 @@ async function connectWallet(){
 }
 </script>
   <!-- STANDARD WEB3 WALLET ADAPTER -->
-<script>
 // 1. CHECK WALLET - Multi-Wallet (Phantom + Solflare + Backpack)
 async function checkWallet(){
   const msg = document.getElementById('walletMsg');
@@ -408,7 +406,6 @@ async function checkWallet(){
   }catch(e){
     msg.innerText = "Connection cancelled";
   }
-}
 
 // 2. SHARE ON X - 1 click tweet
 function shareX(){
