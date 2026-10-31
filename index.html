@@ -468,25 +468,26 @@ async function loadHolders(){
   }
 <!-- END LEADERBOARD -->
    <script>
-// FIX Loading Market Day + Holders - GOOD VERSION
+// FIX Loading Market Day + Holders - CLEAN
 (function(){
-  // Fix Market Day - Oct 27 2026 = Eke, so Oct 28 = Orie
-  const days=[{n:"Eke",e:"🔥 FIRE — Creation"},{n:"Orie",e:"💧 WATER — Community"},{n:"Afo",e:"🌍 EARTH — Wisdom"},{n:"Nkwo",e:"🌬️ AIR — Prosperity"}];
+  const days=[
+    {n:"Eke",e:"FIRE - Creation"},
+    {n:"Orie",e:"WATER - Community"},
+    {n:"Afo",e:"EARTH - Wisdom"},
+    {n:"Nkwo",e:"AIR - Prosperity"}
+  ];
   const base=new Date(2026,9,27);
   const t=new Date(); t.setHours(0,0,0,0);
   const diff=Math.floor((t-base)/86400000);
   const idx=((diff%4)+4)%4;
   const el=document.getElementById('elementDay');
-  if(el) el.innerText=days[idx].n+" • "+days[idx].e;
-  
-  // Fix Holders - use simple display (no blocked RPC)
+  if(el) el.innerText=days[idx].n+" - "+days[idx].e;
   const list=document.getElementById('holdersList');
   if(list){
-    list.innerHTML='<div class="holder-row"><span>#1 Bonding Curve — Live</span></div><div class="holder-row"><span>#2 85dopX...sMU6 — 1 ⭐ Tribe</span></div><div class="holder-row"><span>#3 AR4enF...pump — Creator</span></div>';
+    list.innerHTML='<div>#1 Bonding Curve - Live</div><div>#2 85dopX...sMU6 - 1 Star Tribe</div><div>#3 AR4enF...pump - Creator</div>';
   }
-  // Fix live-mc
   const live=document.getElementById('live-mc');
-  if(live) live.innerText=`$OMENALA - 21st Century Work - $10.4K MC LIVE — ${days[idx].n} Day`;
+  if(live) live.innerText="$OMENALA - 21st Century Work - $10.4K MC LIVE - "+days[idx].n+" Day";
 })();
 </script>
   <!-- DAO VOTING -->
