@@ -4,217 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Omenala Web3</title>
-  
-  <!-- ======================================================== -->
-  <!-- STEP 2: NATIVE DECENTRALIZED WEB3 SWAP TERMINAL ROUTER -->
-  <!-- ======================================================== -->
   <script src="https://jup.ag" defer></script>
-
   <style>
-    @font-face {
-      font-family: "Optimistic";
-      font-style: normal;
-      font-weight: 400 600;
-      font-display: swap;
-      src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-    }
-    @font-face {
-      font-family: "Optimistic Mono";
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-    }
-    :where(html) {
-      font-family: "Optimistic", system-ui, sans-serif;
-    }
-    :where(code, pre, kbd, samp) {
-      font-family: "Optimistic Mono", ui-monospace, monospace;
-    }
-
-    /* Your Core Theme Layout Stylesheet Parameters */
-    *, ::before, ::after {
-      box-sizing: border-box;
-      border-width: 0;
-      border-style: solid;
-      border-color: #e5e7eb;
-    }
     body {
       margin: 0;
-      line-height: inherit;
-      background-color: rgb(61 10 23); /* bg-espresso */
-      color: rgb(250 246 240 / 0.9); /* text-cream/90 */
-      font-family: "Cairo", "Inter", sans-serif;
-      -webkit-font-smoothing: antialiased;
+      background-color: rgb(61 10 23);
+      color: rgb(250 246 240 / 0.9);
+      font-family: system-ui, sans-serif;
     }
   </style>
-
-  <!-- React Core Execution Bundle Dependencies -->
-  <script src="https://unpkg.com" crossorigin></script>
-  <script src="https://unpkg.com" crossorigin></script>
-  <!-- Babel Engine for processing JavaScript inline compiler syntax -->
-  <script src="https://unpkg.com"></script>
 </head>
 <body>
-
-  <!-- Physical Anchor Root Container -->
-  <div id="root"></div>
-
-  <!-- ======================================================== -->
-  <!-- STEP 1: INTERACTIVE WEB3 FRONTEND INTERFACE ARCHITECTURE -->
-  <!-- ======================================================== -->
-  <script type="text/babel">
+  <div style="min-height: 100vh; display: flex; flex-direction: column;">
+    <header style="position: fixed; top: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(61, 10, 23, 0.85);">
+      <span style="font-size: 24px; font-weight: bold; color: #ead5c1;">OMENALA WEB3</span>
+      <button id="connect-btn" style="border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 8px 24px; border-radius: 9999px; cursor: pointer; font-weight: bold;">CONNECT WALLET</button>
+    </header>
+    <div style="display: flex; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 120px 24px 64px 24px; gap: 48px; justify-content: center;">
+      <div style="flex: 1; min-width: 300px; max-width: 550px;">
+        <h1 style="font-size: 48px; color: #fff; margin: 0 0 24px 0;">Preserving Culture Through Decentralization</h1>
+        <p style="color: rgba(250,246,240,0.7); font-size: 18px; line-height: 1.6;">Welcome to Omenala, where ancestral legacy converges with Web3 protocols.</p>
+        <button id="copy-btn" style="background: #ead5c1; color: #3d0a17; border: none; font-weight: bold; padding: 10px 20px; border-radius: 12px; cursor: pointer; margin-top: 16px;">COPY CA</button>
+      </div>
+      <div id="integrated-terminal" style="width: 100%; max-width: 420px; min-height: 500px;"></div>
+    </div>
+  </div>
+  <script>
     const TOKEN_MINT = "AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
-    const EXTERNAL_PUMP_URL = `https://pump.fun{TOKEN_MINT}`;
-
-    function App() {
-      const [walletAddress, setWalletAddress] = React.useState(null);
-      const [isConnecting, setIsConnecting] = React.useState(false);
-      const [copied, setCopied] = React.useState(false);
-
-      // Fires up the live exchange swap widget automatically inside your custom section
-      React.useEffect(() => {
-        const initJupiter = () => {
-          if (window.Jupiter) {
-            window.Jupiter.init({
-              displayMode: "integrated",
-              integratedTargetId: "integrated-terminal",
-              mint: TOKEN_MINT,
-              strictTokenList: false,
-              formProps: {
-                fixedOutputMint: true,
-                initialInputMint: "So11111111111111111111111111111111111111112", // Default pairs as standard SOL
-              },
-              theme: "dark",
-            });
-          }
-        };
-
-        if (window.Jupiter) {
-          initJupiter();
-        } else {
-          document.addEventListener('jupiterTerminalReady', initJupiter);
-        }
-      }, []);
-
-      // Real-time Blockchain Secure wallet request validation 
-      const handleWalletConnect = async () => {
-        if (walletAddress) {
-          setWalletAddress(null);
-          return;
-        }
-
-        setIsConnecting(true);
-        try {
-          const provider = window?.solana || window?.phantom?.solana;
-          
-          if (provider?.isPhantom) {
-            const response = await provider.connect();
-            const pubKey = response.publicKey.toString();
-            setWalletAddress(`${pubKey.slice(0, 4)}...${pubKey.slice(-4)}`);
-          } else {
-            alert("Web3 Extension Wallet not detected. Please install Phantom or Solflare to use connection elements securely.");
-          }
-        } catch (error) {
-          console.error("Wallet interface authentication rejected:", error);
-        } finally {
-          setIsConnecting(false);
-        }
-      };
-
-      const copyToClipboard = () => {
-        navigator.clipboard.writeText(TOKEN_MINT);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      };
-
-      return (
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-          
-          {/* Culturally Tailored Top Navigation Strip */}
-          <header style={{
-            position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 50,
-            background: 'rgba(61, 10, 23, 0.85)', backdropFilter: 'blur(12px)',
-            borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '16px 24px',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center'
-          }}>
-            <span style={{ fontFamily: 'serif', fontSize: '24px', fontWeight: 'bold', letterSpacing: '0.05em', color: '#ead5c1' }}>
-              OMENALA WEB3
-            </span>
-            <button 
-              onClick={handleWalletConnect}
-              style={{
-                border: '2px solid #ead5c1', background: 'transparent', color: '#ead5c1',
-                padding: '8px 24px', borderRadius: '9999px', cursor: 'pointer', fontWeight: 'bold',
-                transition: '0.3s'
-              }}
-            >
-              {isConnecting ? "CONNECTING..." : walletAddress ? `DISCONNECT (${walletAddress})` : "CONNECT WALLET"}
-            </button>
-          </header>
-
-          {/* Core Content Body Splitting Info vs Transaction Terminal Layout */}
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', maxWidth: '1200px', margin: '0 auto',
-            padding: '120px 24px 64px 24px', gap: '48px', alignItems: 'center', justifyContent: 'center'
-          }}>
-            
-            {/* Cultural Preservation Context Frame */}
-            <div style={{ flex: '1', minWidth: '300px', maxWidth: '550px' }}>
-              <h1 style={{ fontFamily: 'serif', fontSize: '48px', color: '#fff', margin: '0 0 24px 0', lineHeight: 1.2 }}>
-                Preserving Culture Through <span style={{ color: '#ead5c1', fontStyle: 'italic' }}>Decentralization</span>
-              </h1>
-              <p style={{ color: 'rgba(250,246,240,0.7)', fontSize: '18px', lineHeight: 1.6, margin: '0 0 32px 0' }}>
-                Welcome to Omenala, where ancestral legacy converges seamlessly with Web3 protocol networks. Connect your local hardware or browser security keys to execute operations.
-              </p>
-
-              {/* Secure Smart Contract Component Anchor */}
-              <div style={{
-                background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                padding: '16px', borderRadius: '16px', display: 'flex', justifyContent: 'space-between',
-                alignItems: 'center', gap: '16px'
-              }}>
-                <div style={{ overflow: 'hidden' }}>
-                  <div style={{ fontSize: '11px', textTransform: 'uppercase', color: '#ead5c1', fontWeight: 'bold', marginBottom: '4px' }}>Token Smart Contract</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: '13px', color: 'rgba(255,255,255,0.85)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {TOKEN_MINT}
-                  </div>
-                </div>
-                <button 
-                  onClick={copyToClipboard}
-                  style={{ background: '#ead5c1', color: '#3d0a17', border: 'none', fontWeight: 'bold', padding: '10px 20px', borderRadius: '12px', cursor: 'pointer' }}
-                >
-                  {copied ? "COPIED!" : "COPY CA"}
-                </button>
-              </div>
-
-              <div style={{ marginTop: '24px' }}>
-                <a href={EXTERNAL_PUMP_URL} target="_blank" rel="noopener" style={{ color: 'rgba(250,246,240,0.5)', textDecoration: 'underline', fontSize: '14px' }}>
-                  Verify live metrics on Pump.fun &rarr;
-                </a>
-              </div>
-            </div>
-
-            {/* Live Swap Transaction Desk */}
-            <div style={{
-              background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)',
-              padding: '24px', borderRadius: '24px', width: '100%', maxWidth: '420px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
-            }}>
-              <h2 style={{ fontSize: '16px', textTransform: 'uppercase', textAlign: 'center', color: '#ead5c1', letterSpacing: '0.05em', margin: '0 0 16px 0' }}>
-                Secured Liquidity Exchange
-              </h2>
-              
-              {/* Native target anchor matching the script initialization parameter hook */}
-              <div id="integrated-terminal" style={{ width: '100%', minHeight: '500px', borderRadius: '16px', overflow: 'hidden' }}></div>
-            </div>
-
-          </div>
-        </div>
-      );
+    function initJupiter() {
+      if (window.Jupiter) {
+        window.Jupiter.init({ displayMode: "integrated", integratedTargetId: "integrated-terminal", mint: TOKEN_MINT, theme: "dark" });
+      }
     }
+    window.Jupiter ? initJupiter() : document.addEventListener('jupiterTerminalReady', initJupiter);
+    
+    document.getElementById('connect-btn').addEventListener('click', async () => {
+      const provider = window?.solana || window?.phantom?.solana;
+      if (provider?.isPhantom) {
+        const res = await provider.connect();
+        document.getElementById('connect-btn').innerText = `CONNECTED (${res.publicKey.toString().slice(0, 4)}...)`;
+      } else {
+        alert("Please install Phantom or another compatible Web3 wallet.");
+      }
+    });
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(TOKEN_MINT);
+      document.getElementById('copy-btn').innerText = "COPIED!";
+      setTimeout(() => document.getElementById('copy-btn').innerText = "COPY CA", 2000);
+    });
   </script>
 </body>
 </html>
