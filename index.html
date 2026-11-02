@@ -3,140 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omenala Web3</title>
+  <title>Omenala Web3 — Decentralized Advertising Hub</title>
   <script src="https://jup.ag" defer></script>
   <style>
-    body {
-      margin: 0;
-      background-color: #1a020a;
-      background-image: radial-gradient(circle at top right, rgba(234,213,193,0.1), transparent), radial-gradient(circle at bottom center, rgba(0,255,204,0.03), transparent);
-      color: #faf6f0;
-      font-family: system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-    .glass-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(234, 213, 193, 0.15);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(10px);
-    }
-    .m-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      margin-bottom: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.03);
-    }
-    .m-badge {
-      padding: 4px 12px;
-      border-radius: 99px;
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 0.05em;
-    }
-    .act-day { background: linear-gradient(135deg, #ead5c1, #b89c7d); color: #1a020a; box-shadow: 0 0 10px rgba(234,213,193,0.2); }
+    body { margin: 0; background-color: #1a020a; color: #faf6f0; font-family: system-ui, sans-serif; }
+    .glass-box { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(234, 213, 193, 0.15); border-radius: 16px; padding: 20px; margin-bottom: 20px; backdrop-filter: blur(10px); }
+    .m-row { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 10px; margin-bottom: 8px; }
+    .m-badge { padding: 4px 12px; border-radius: 99px; font-size: 11px; font-weight: bold; }
+    .act-day { background: #ead5c1; color: #1a020a; }
     .inact-day { background: rgba(255, 255, 255, 0.05); color: rgba(250,246,240,0.4); }
     #integrated-terminal { width: 100%; height: 510px; background: rgba(0, 0, 0, 0.25); border-radius: 14px; margin-top: 16px; }
+    .ad-tier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .ad-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(234,213,193,0.1); border-radius: 12px; padding: 12px; text-align: center; }
+    .ad-price { font-size: 18px; color: #00ffcc; font-weight: bold; font-family: monospace; margin: 4px 0; }
+    .input-field { background: rgba(0,0,0,0.4); border: 1px solid rgba(234,213,193,0.2); border-radius: 8px; padding: 10px; color: #fff; width: 100%; box-sizing: border-box; margin-bottom: 12px; font-size: 13px; }
+    .submit-btn { width: 100%; background: #ead5c1; color: #1a020a; border: none; font-weight: bold; padding: 12px; border-radius: 8px; cursor: pointer; text-transform: uppercase; font-size: 13px; }
   </style>
 </head>
 <body>
-
-  <!-- Navigation Grid Header -->
-  <header style="position: fixed; top: 0; width: 100%; padding: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(26, 2, 10, 0.95); z-index: 1000; border-bottom: 1px solid rgba(234, 213, 193, 0.1); box-sizing: border-box;">
-    <div>
-      <div style="font-weight: 900; color: #ead5c1; letter-spacing: 1px;">OMENALA WEB3</div>
-      <div style="font-size: 9px; color: #00ffcc; font-family: monospace; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
-        <span style="width: 5px; height: 5px; background: #00ffcc; border-radius: 50%;"></span> MAINNET ACTIVE
-      </div>
-    </div>
+  <header style="position: fixed; top: 0; width: 100%; padding: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(26, 2, 10, 0.95); z-index: 1000; box-sizing: border-box;">
+    <div style="font-weight: 900; color: #ead5c1;">OMENALA WEB3</div>
     <button id="connect-btn" style="border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 8px 16px; border-radius: 99px; cursor: pointer; font-weight: bold; font-size: 12px;">CONNECT WALLET</button>
   </header>
-
-  <!-- Interactive Terminal Hub -->
-  <div style="padding: 95px 16px 40px 16px; max-width: 480px; margin: 0 auto; box-sizing: border-box;">
-    
-    <h1 style="font-size: 32px; font-weight: 800; line-height: 1.2; margin: 10px 0;">Preserving Culture Through <span style="color: #ead5c1; font-style: italic;">Decentralization</span></h1>
-    <p style="color: rgba(250,246,240,0.6); font-size: 14px; margin-bottom: 20px;">Merging ancient cosmological legacy with Web3 structural layers.</p>
-
-    <!-- Clipboard Registry Module -->
-    <div class="glass-box" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; border-color: rgba(0,255,204,0.2);">
-      <div style="overflow: hidden;">
-        <div style="font-size: 9px; color: #00ffcc; font-weight: bold; font-family: monospace;">TOKEN CONTRACT MINTPORT</div>
-        <div id="ca-str" style="font-family: monospace; font-size: 12px; color: rgba(255,255,255,0.7); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</div>
-      </div>
-      <button id="copy-btn" style="background: #00ffcc; color: #1a020a; border: none; font-weight: bold; padding: 6px 12px; border-radius: 8px; font-size: 11px; cursor: pointer;">COPY</button>
-    </div>
-
-    <!-- The Igbo Marketplace Cosmology Feed -->
+  <div style="padding: 95px 16px 40px 16px; max-width: 480px; margin: 0 auto;">
+    <h1>Preserving Culture Through Decentralization</h1>
     <div class="glass-box">
-      <h3 style="color: #ead5c1; font-size: 14px; margin: 0 0 12px 0; letter-spacing: 0.05em;">AFAMEFULA COSMOS ORACLE</h3>
+      <h3 style="color: #ead5c1; font-size: 14px; margin: 0 0 12px 0;">AFAMEFULA COSMOS ORACLE</h3>
       <div class="m-row"><span>EKE GATEWAY</span><span class="m-badge" id="badge-eke">...</span></div>
       <div class="m-row"><span>ORIE GATEWAY</span><span class="m-badge" id="badge-orie">...</span></div>
       <div class="m-row"><span>AFOR GATEWAY</span><span class="m-badge" id="badge-afor">...</span></div>
       <div class="m-row"><span>NKWO GATEWAY</span><span class="m-badge" id="badge-nkwo">...</span></div>
     </div>
-
-    <!-- Execution Swap Block Target Container -->
     <div class="glass-box">
-      <div style="font-size: 11px; color: #ead5c1; font-family: monospace; text-align: center; letter-spacing: 1px;">SECURE ROUTER INSTANT EXCHANGE</div>
+      <h3 style="color: #ead5c1; font-size: 14px; margin: 0 0 4px 0;">DECENTRALIZED AD IMPRESSIONS</h3>
+      <div class="ad-tier-grid">
+        <div class="ad-card" id="card-eke"><div>EKE</div><div class="ad-price">50K $OM</div></div>
+        <div class="ad-card" id="card-orie"><div>ORIE</div><div class="ad-price">35K $OM</div></div>
+        <div class="ad-card" id="card-afor"><div>AFOR</div><div class="ad-price">30K $OM</div></div>
+        <div class="ad-card" id="card-nkwo"><div>NKWO</div><div class="ad-price">45K $OM</div></div>
+      </div>
+    </div>
+    <div class="glass-box">
+      <h3 style="color: #ead5c1; font-size: 14px; margin: 0 0 12px 0;">LAUNCH AD CAMPAIGN</h3>
+      <input type="text" class="input-field" id="ad-banner-url" placeholder="Banner IPFS URL">
+      <button class="submit-btn" id="ad-submit-btn">Verify Ad Inventory</button>
+    </div>
+    <div class="glass-box">
       <div id="integrated-terminal"></div>
     </div>
-
   </div>
-
   <script>
     const TOKEN_MINT = "AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
-    
-    function calculateIgboMarketDay() {
-      const days = ['eke', 'orie', 'afor', 'nkwo'];
-      const deltaDays = Math.floor((Date.now() - 1704067200000) / 86400000);
-      const activeIdx = ((deltaDays % 4) + 4) % 4;
-      days.forEach((day, idx) => {
-        const badge = document.getElementById(`badge-${day}`);
-        if (badge) {
-          badge.innerText = idx === activeIdx ? "ACTIVE" : "LOCKED";
-          badge.className = `m-badge ${idx === activeIdx ? 'act-day' : 'inact-day'}`;
-        }
-      });
-    }
-
     function initJupiter() {
-      if (window.Jupiter) {
-        window.Jupiter.init({ displayMode: "integrated", integratedTargetId: "integrated-terminal", mint: TOKEN_MINT, theme: "dark" });
-      }
+      if (window.Jupiter) window.Jupiter.init({ displayMode: "integrated", integratedTargetId: "integrated-terminal", mint: TOKEN_MINT, theme: "dark" });
     }
-
-    document.getElementById('connect-btn').addEventListener('click', async () => {
-      const provider = window?.solana || window?.phantom?.solana;
-      if (provider) {
-        const res = await provider.connect();
-        const str = res.publicKey.toString();
-        document.getElementById('connect-btn').innerText = `${str.slice(0,4)}...${str.slice(-4)}`;
-        document.getElementById('connect-btn').style.color = "#00ffcc";
-        document.getElementById('connect-btn').style.borderColor = "#00ffcc";
-      } else {
-        if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
-          window.location.href = "https://phantom.app";
-        } else {
-          alert("Please use a Web3 extension browser.");
-        }
-      }
-    });
-
-    document.getElementById('copy-btn').addEventListener('click', () => {
-      navigator.clipboard.writeText(TOKEN_MINT);
-      document.getElementById('copy-btn').innerText = "DONE";
-      setTimeout(() => document.getElementById('copy-btn').innerText = "COPY", 1500);
-    });
-
     window.addEventListener('jupiterTerminalReady', initJupiter);
     setTimeout(initJupiter, 2000);
-    calculateIgboMarketDay();
   </script>
 </body>
 </html>
