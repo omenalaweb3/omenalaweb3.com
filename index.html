@@ -67,7 +67,6 @@
     document.getElementById('connect-btn').addEventListener('click', async () => {
       const provider = window?.solana || window?.phantom?.solana;
       
-      // If active inside a Web3 app layer context, sign transaction variables normally
       if (provider?.isPhantom) {
         try {
           const res = await provider.connect();
@@ -77,11 +76,10 @@
           console.log("Connection closed.");
         }
       } else {
-        // Advanced Fallback: If on standard mobile web browsers, trigger deep-linking protocol mechanisms to boot Phantom automatically
         const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
         if (isMobile) {
-          const currentUrl = encodeURIComponent(window.location.href);
-          window.location.href = `https://phantom.app{currentUrl}`;
+          // Direct native application universal router configuration link
+          window.location.href = "https://phantom.app";
         } else {
           alert("Please install Phantom or another compatible Web3 wallet desktop extension.");
         }
