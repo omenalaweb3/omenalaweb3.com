@@ -2,41 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Omenala Web3 — Ancestral Legacy meets Blockchain</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omenala Web3</title>
   <script src="https://jup.ag" defer></script>
   <style>
-    body { margin: 0; background-color: rgb(45 5 15); color: rgb(250 246 240 / 0.95); font-family: system-ui, sans-serif; }
-    .glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 213, 193, 0.15); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
-    .market-badge { display: inline-block; padding: 6px 14px; border-radius: 9999px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-    .active-day { background: linear-gradient(135deg, #ead5c1, #b89c7d); color: #2d050f; }
-    .inactive-day { background: rgba(255, 255, 255, 0.05); color: rgba(250, 246, 240, 0.4); }
-    .market-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: rgba(0, 0, 0, 0.15); border-radius: 12px; margin-bottom: 12px; }
-    #integrated-terminal { width: 100%; height: 520px; background: rgba(0, 0, 0, 0.3); border-radius: 18px; }
-    header button { border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 8px 16px; border-radius: 9999px; cursor: pointer; font-weight: bold; font-size: 13px; }
+    body {
+      margin: 0;
+      background-color: #1a020a;
+      background-image: radial-gradient(circle at top right, rgba(234,213,193,0.1), transparent), radial-gradient(circle at bottom center, rgba(0,255,204,0.03), transparent);
+      color: #faf6f0;
+      font-family: system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .glass-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(234, 213, 193, 0.15);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+    .m-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .m-badge {
+      padding: 4px 12px;
+      border-radius: 99px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+    }
+    .act-day { background: linear-gradient(135deg, #ead5c1, #b89c7d); color: #1a020a; box-shadow: 0 0 10px rgba(234,213,193,0.2); }
+    .inact-day { background: rgba(255, 255, 255, 0.05); color: rgba(250,246,240,0.4); }
+    #integrated-terminal { width: 100%; height: 510px; background: rgba(0, 0, 0, 0.25); border-radius: 14px; margin-top: 16px; }
   </style>
 </head>
 <body>
-  <header style="position: fixed; top: 0; left: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(45, 5, 15, 0.9); z-index: 1000; box-sizing: border-box;">
-    <span style="font-weight: bold; color: #ead5c1;">OMENALA WEB3</span>
-    <button id="connect-btn">CONNECT WALLET</button>
-  </header>
-  
-  <div style="padding: 110px 24px 64px 24px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; width: 100%;">
-    <h1>Preserving Culture Through <em>Decentralization</em></h1>
-    <p style="margin-bottom: 32px; color: rgba(250, 246, 240, 0.7);">Welcome to Omenala, bridging ancestral systems with Web3 protocols.</p>
-    
-    <div class="glass-card">
-      <h2 style="color: #ead5c1; font-size: 18px; margin-top: 0;">AFAMEFULA: THE FOUR MARKET DAYS</h2>
-      <div id="market-days-container">
-        <div class="market-row"><strong>EKE</strong><span class="market-badge" id="badge-eke">Loading</span></div>
-        <div class="market-row"><strong>ORIE</strong><span class="market-badge" id="badge-orie">Loading</span></div>
-        <div class="market-row"><strong>AFOR</strong><span class="market-badge" id="badge-afor">Loading</span></div>
-        <div class="market-row"><strong>NKWO</strong><span class="market-badge" id="badge-nkwo">Loading</span></div>
+
+  <!-- Navigation Grid Header -->
+  <header style="position: fixed; top: 0; width: 100%; padding: 16px; display: flex; justify-content: space-between; align-items: center; background: rgba(26, 2, 10, 0.95); z-index: 1000; border-bottom: 1px solid rgba(234, 213, 193, 0.1); box-sizing: border-box;">
+    <div>
+      <div style="font-weight: 900; color: #ead5c1; letter-spacing: 1px;">OMENALA WEB3</div>
+      <div style="font-size: 9px; color: #00ffcc; font-family: monospace; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+        <span style="width: 5px; height: 5px; background: #00ffcc; border-radius: 50%;"></span> MAINNET ACTIVE
       </div>
     </div>
+    <button id="connect-btn" style="border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 8px 16px; border-radius: 99px; cursor: pointer; font-weight: bold; font-size: 12px;">CONNECT WALLET</button>
+  </header>
+
+  <!-- Interactive Terminal Hub -->
+  <div style="padding: 95px 16px 40px 16px; max-width: 480px; margin: 0 auto; box-sizing: border-box;">
     
-    <div id="integrated-terminal"></div>
+    <h1 style="font-size: 32px; font-weight: 800; line-height: 1.2; margin: 10px 0;">Preserving Culture Through <span style="color: #ead5c1; font-style: italic;">Decentralization</span></h1>
+    <p style="color: rgba(250,246,240,0.6); font-size: 14px; margin-bottom: 20px;">Merging ancient cosmological legacy with Web3 structural layers.</p>
+
+    <!-- Clipboard Registry Module -->
+    <div class="glass-box" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; border-color: rgba(0,255,204,0.2);">
+      <div style="overflow: hidden;">
+        <div style="font-size: 9px; color: #00ffcc; font-weight: bold; font-family: monospace;">TOKEN CONTRACT MINTPORT</div>
+        <div id="ca-str" style="font-family: monospace; font-size: 12px; color: rgba(255,255,255,0.7); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</div>
+      </div>
+      <button id="copy-btn" style="background: #00ffcc; color: #1a020a; border: none; font-weight: bold; padding: 6px 12px; border-radius: 8px; font-size: 11px; cursor: pointer;">COPY</button>
+    </div>
+
+    <!-- The Igbo Marketplace Cosmology Feed -->
+    <div class="glass-box">
+      <h3 style="color: #ead5c1; font-size: 14px; margin: 0 0 12px 0; letter-spacing: 0.05em;">AFAMEFULA COSMOS ORACLE</h3>
+      <div class="m-row"><span>EKE GATEWAY</span><span class="m-badge" id="badge-eke">...</span></div>
+      <div class="m-row"><span>ORIE GATEWAY</span><span class="m-badge" id="badge-orie">...</span></div>
+      <div class="m-row"><span>AFOR GATEWAY</span><span class="m-badge" id="badge-afor">...</span></div>
+      <div class="m-row"><span>NKWO GATEWAY</span><span class="m-badge" id="badge-nkwo">...</span></div>
+    </div>
+
+    <!-- Execution Swap Block Target Container -->
+    <div class="glass-box">
+      <div style="font-size: 11px; color: #ead5c1; font-family: monospace; text-align: center; letter-spacing: 1px;">SECURE ROUTER INSTANT EXCHANGE</div>
+      <div id="integrated-terminal"></div>
+    </div>
+
   </div>
 
   <script>
@@ -44,52 +94,48 @@
     
     function calculateIgboMarketDay() {
       const days = ['eke', 'orie', 'afor', 'nkwo'];
-      const deltaDays = Math.floor((Date.now() - 1704067200000) / (86400000));
-      const activeIndex = ((deltaDays % 4) + 4) % 4;
-      days.forEach((day, index) => {
+      const deltaDays = Math.floor((Date.now() - 1704067200000) / 86400000);
+      const activeIdx = ((deltaDays % 4) + 4) % 4;
+      days.forEach((day, idx) => {
         const badge = document.getElementById(`badge-${day}`);
         if (badge) {
-          badge.innerText = index === activeIndex ? "ACTIVE" : "LOCKED";
-          badge.className = `market-badge ${index === activeIndex ? 'active-day' : 'inactive-day'}`;
+          badge.innerText = idx === activeIdx ? "ACTIVE" : "LOCKED";
+          badge.className = `m-badge ${idx === activeIdx ? 'act-day' : 'inact-day'}`;
         }
       });
     }
 
     function initJupiter() {
-      if (window.Jupiter && document.getElementById('integrated-terminal')) {
-        window.Jupiter.init({ 
-          displayMode: "integrated", 
-          integratedTargetId: "integrated-terminal", 
-          mint: TOKEN_MINT, 
-          theme: "dark" 
-        });
+      if (window.Jupiter) {
+        window.Jupiter.init({ displayMode: "integrated", integratedTargetId: "integrated-terminal", mint: TOKEN_MINT, theme: "dark" });
       }
     }
 
-    // Wallet Connectivity Core Logic
     document.getElementById('connect-btn').addEventListener('click', async () => {
       const provider = window?.solana || window?.phantom?.solana;
-      
       if (provider) {
-        try {
-          const res = await provider.connect();
-          const addr = res.publicKey.toString();
-          document.getElementById('connect-btn').innerText = `${addr.slice(0, 4)}...${addr.slice(-4)}`;
-        } catch (err) {
-          console.error("User rejected connection authorization framework:", err);
-        }
+        const res = await provider.connect();
+        const str = res.publicKey.toString();
+        document.getElementById('connect-btn').innerText = `${str.slice(0,4)}...${str.slice(-4)}`;
+        document.getElementById('connect-btn').style.color = "#00ffcc";
+        document.getElementById('connect-btn').style.borderColor = "#00ffcc";
       } else {
-        const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-        if (isMobile) {
+        if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
           window.location.href = "https://phantom.app";
         } else {
-          alert("Please install Phantom or another compatible Web3 wallet extension.");
+          alert("Please use a Web3 extension browser.");
         }
       }
     });
 
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(TOKEN_MINT);
+      document.getElementById('copy-btn').innerText = "DONE";
+      setTimeout(() => document.getElementById('copy-btn').innerText = "COPY", 1500);
+    });
+
     window.addEventListener('jupiterTerminalReady', initJupiter);
-    setTimeout(initJupiter, 2500);
+    setTimeout(initJupiter, 2000);
     calculateIgboMarketDay();
   </script>
 </body>
