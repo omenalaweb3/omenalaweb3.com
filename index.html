@@ -12,7 +12,6 @@
       color: rgb(250 246 240 / 0.9);
       font-family: system-ui, sans-serif;
     }
-    /* Smooth scaling parameters to lock the terminal window into place nicely on phones */
     #integrated-terminal {
       width: 100%;
       min-width: 280px;
@@ -29,7 +28,7 @@
 <body>
   <div style="min-height: 100vh; display: flex; flex-direction: column;">
     <header style="position: fixed; top: 0; left: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(61, 10, 23, 0.95); backdrop-filter: blur(8px); z-index: 100; box-sizing: border-box;">
-      <span style="font-size: 20px; font-weight: bold; color: #ead5c1; tracking-wider">OMENALA WEB3</span>
+      <span style="font-size: 20px; font-weight: bold; color: #ead5c1;">OMENALA WEB3</span>
       <button id="connect-btn" style="border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 8px 16px; border-radius: 9999px; cursor: pointer; font-weight: bold; font-size: 13px;">CONNECT WALLET</button>
     </header>
     
@@ -40,7 +39,6 @@
         <button id="copy-btn" style="background: #ead5c1; color: #3d0a17; border: none; font-weight: bold; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-size: 14px;">COPY CA</button>
       </div>
       
-      <!-- Container element where the live Jupiter protocol drops in -->
       <div id="integrated-terminal"></div>
     </div>
   </div>
@@ -59,17 +57,17 @@
       }
     }
     
-    // Safely verify when the terminal network finishes loading over mobile data
     if (window.Jupiter) {
       initJupiter();
     } else {
       document.addEventListener('jupiterTerminalReady', initJupiter);
-      // Extra network heartbeat fallback checker
       setTimeout(initJupiter, 3000);
     }
     
     document.getElementById('connect-btn').addEventListener('click', async () => {
       const provider = window?.solana || window?.phantom?.solana;
+      
+      // If active inside a Web3 app layer context, sign transaction variables normally
       if (provider?.isPhantom) {
         try {
           const res = await provider.connect();
@@ -79,7 +77,14 @@
           console.log("Connection closed.");
         }
       } else {
-        alert("Please install Phantom or another compatible Web3 wallet extension.");
+        // Advanced Fallback: If on standard mobile web browsers, trigger deep-linking protocol mechanisms to boot Phantom automatically
+        const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+        if (isMobile) {
+          const currentUrl = encodeURIComponent(window.location.href);
+          window.location.href = `https://phantom.app{currentUrl}`;
+        } else {
+          alert("Please install Phantom or another compatible Web3 wallet desktop extension.");
+        }
       }
     });
 
