@@ -4,184 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Omenala Web3 — Ancestral Legacy meets Blockchain</title>
-  
-  <!-- Jupiter Swap Assembly Protocol Engine -->
   <script src="https://jup.ag" defer></script>
-  
   <style>
-    body {
-      margin: 0;
-      background-color: rgb(45 5 15); /* Richer Deep Igbo Clay/Espresso Tone */
-      background-image: radial-gradient(circle at top right, rgba(234, 213, 193, 0.08), transparent), 
-                        radial-gradient(circle at bottom left, rgba(61, 10, 23, 0.9), transparent);
-      color: rgb(250 246 240 / 0.95);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Web3 Premium Frosted Glass Layout Architecture */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(234, 213, 193, 0.15);
-      border-radius: 20px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 24px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-    }
-    
-    .glass-card:hover {
-      border-color: rgba(234, 213, 193, 0.3);
-      box-shadow: 0 25px 45px rgba(234, 213, 193, 0.05);
-    }
-
-    /* Market Day Visual Indicators */
-    .market-badge {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-top: 8px;
-    }
-
-    .active-day {
-      background: linear-gradient(135deg, #ead5c1, #b89c7d);
-      color: #2d050f;
-      box-shadow: 0 0 15px rgba(234, 213, 193, 0.4);
-      animation: pulse 2s infinite alternate;
-    }
-
-    .inactive-day {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(250, 246, 240, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    #integrated-terminal {
-      width: 100%;
-      min-width: 280px;
-      max-width: 420px;
-      height: 520px;
-      border-radius: 18px;
-      overflow: hidden;
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.03); }
-    }
+    body { margin: 0; background-color: rgb(45 5 15); color: rgb(250 246 240 / 0.95); font-family: system-ui, sans-serif; }
+    .glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(234, 213, 193, 0.15); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
+    .market-badge { display: inline-block; padding: 6px 14px; border-radius: 9999px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+    .active-day { background: linear-gradient(135deg, #ead5c1, #b89c7d); color: #2d050f; }
+    .inactive-day { background: rgba(255, 255, 255, 0.05); color: rgba(250, 246, 240, 0.4); }
+    .market-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: rgba(0, 0, 0, 0.15); border-radius: 12px; margin-bottom: 12px; }
+    #integrated-terminal { width: 100%; height: 520px; background: rgba(0, 0, 0, 0.3); border-radius: 18px; }
   </style>
 </head>
 <body>
-
-  <div style="min-height: 100vh; display: flex; flex-direction: column; box-sizing: border-box;">
-    
-    <!-- Top Web3 Status Header Bar -->
-    <header style="position: fixed; top: 0; left: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(45, 5, 15, 0.9); backdrop-filter: blur(10px); z-index: 1000; box-sizing: border-box; border-bottom: 1px solid rgba(234, 213, 193, 0.1);">
-      <div style="display: flex; flex-direction: column;">
-        <span style="font-size: 22px; font-weight: 800; color: #ead5c1; letter-spacing: 0.03em;">OMENALA WEB3</span>
-        <span style="font-size: 10px; color: #00ffcc; font-family: monospace; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
-          <span style="width: 6px; height: 6px; background: #00ffcc; border-radius: 50%; display: inline-block;"></span> SOLANA MAINNET LIVE
-        </span>
+  <header style="position: fixed; top: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(45, 5, 15, 0.9); z-index: 1000; box-sizing: border-box;">
+    <span>OMENALA WEB3</span>
+    <button id="connect-btn">CONNECT WALLET</button>
+  </header>
+  <div style="padding: 110px 24px 64px 24px; max-width: 1200px; margin: 0 auto;">
+    <h1>Preserving Culture Through <em>Decentralization</em></h1>
+    <p>Welcome to Omenala, bridging ancestral systems with Web3 protocols.</p>
+    <div class="glass-card">
+      <h2>AFAMEFULA: THE FOUR MARKET DAYS</h2>
+      <div id="market-days-container">
+        <div class="market-row"><strong>EKE</strong><span class="market-badge" id="badge-eke">Loading</span></div>
+        <div class="market-row"><strong>ORIE</strong><span class="market-badge" id="badge-orie">Loading</span></div>
+        <div class="market-row"><strong>AFOR</strong><span class="market-badge" id="badge-afor">Loading</span></div>
+        <div class="market-row"><strong>NKWO</strong><span class="market-badge" id="badge-nkwo">Loading</span></div>
       </div>
-      <button id="connect-btn" style="border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 10px 20px; border-radius: 9999px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.2s;">CONNECT WALLET</button>
-    </header>
-    
-    <!-- Main Interactive Portal Container -->
-    <div style="display: flex; flex-direction: column; max-width: 1200px; margin: 0 auto; padding: 110px 24px 64px 24px; box-sizing: border-box; width: 100%; gap: 32px;">
-      
-      <!-- Core Cultural Mission Framing -->
-      <div style="width: 100%; text-align: left; margin-bottom: 12px;">
-        <h1 style="font-size: 42px; color: #fff; margin: 0 0 16px 0; line-height: 1.15; font-weight: 800;">Preserving Culture Through <span style="color: #ead5c1; font-style: italic;">Decentralization</span></h1>
-        <p style="color: rgba(250,246,240,0.7); font-size: 17px; line-height: 1.6; margin: 0 0 24px 0; max-w: 700px;">Welcome to Omenala, where ancestral cultural systems converge directly with next-generation Web3 protocols. Secure your financial transactions via on-chain smart logic.</p>
-        
-        <!-- Smart Contract Asset Address Module -->
-        <div style="display: inline-flex; align-items: center; background: rgba(0,0,0,0.2); border: 1px solid rgba(234, 213, 193, 0.2); padding: 8px 16px; border-radius: 12px; gap: 16px; max-width: 100%; box-sizing: border-box;">
-          <div style="overflow: hidden;">
-            <div style="font-size: 10px; color: #ead5c1; font-weight: bold; text-transform: uppercase;">MINT CA</div>
-            <div style="font-family: monospace; font-size: 13px; color: rgba(255,255,255,0.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px;" id="ca-text">AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump</div>
-          </div>
-          <button id="copy-btn" style="background: #ead5c1; color: #2d050f; border: none; font-weight: bold; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; shrink: 0;">COPY</button>
-        </div>
-      </div>
-
-      <!-- Split Layout: Traditional Igbo Market Tracker vs Decentralized Swap Engine -->
-      <div style="display: flex; flex-wrap: wrap; width: 100%; gap: 32px; justify-content: center; align-items: flex-start;">
-        
-        <!-- LEFT: Dynamic Cultural Advertising Display Framework -->
-        <div style="flex: 1; min-width: 300px; max-width: 600px; display: flex; flex-direction: column; gap: 24px;">
-          
-          <div class="glass-card">
-            <h2 style="color: #ead5c1; margin: 0 0 8px 0; font-size: 20px; font-weight: bold; border-bottom: 1px solid rgba(234,213,193,0.1); padding-bottom: 8px;">
-              🌌 AFAMEFULA: THE FOUR MARKET DAYS
-            </h2>
-            <p style="font-size: 14px; color: rgba(250,246,240,0.7); margin-bottom: 16px;">The traditional Igbo cosmological wheel calculates solar configurations to cycle economic activity. Today's active spiritual gateway is broadcasted below:</p>
-            
-            <div style="grid-template-cols: 1fr; display: flex; flex-direction: column; gap: 12px;" id="market-days-container">
-              
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.15); border-radius: 12px;" id="day-eke">
-                <div>
-                  <strong style="color: #fff;">EKE MARKET DAY</strong>
-                  <div style="font-size: 11px; color: rgba(250,246,240,0.5);">Spiritual Gateway: Creation, Energy & Commerce</div>
-                </div>
-                <span class="market-badge" id="badge-eke">Loading</span>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.15); border-radius: 12px;" id="day-orie">
-                <div>
-                  <strong style="color: #fff;">ORIE MARKET DAY</strong>
-                  <div style="font-size: 11px; color: rgba(250,246,240,0.5);">Spiritual Gateway: Wisdom, Prosperity & Trade</div>
-                </div>
-                <span class="market-badge" id="badge-orie">Loading</span>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.15); border-radius: 12px;" id="day-afor">
-                <div>
-                  <strong style="color: #fff;">AFOR MARKET DAY</strong>
-                  <div style="font-size: 11px; color: rgba(250,246,240,0.5);">Spiritual Gateway: Abundance, Earth & Harvest</div>
-                </div>
-                <span class="market-badge" id="badge-afor">Loading</span>
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.15); border-radius: 12px;" id="day-nkwo">
-                <div>
-                  <strong style="color: #fff;">NKWO MARKET DAY</strong>
-                  <div style="font-size: 11px; color: rgba(250,246,240,0.5);">Spiritual Gateway: Rest, Strategy & Community Assembly</div>
-                </div>
-                <span class="market-badge" id="badge-nkwo">Loading</span>
-              </div>
-
-            </div>
-          </div>
-          
-          <!-- Web3 Asset Security Alert Box -->
-          <div class="glass-card" style="border-left: 4px solid #ead5c1; background: rgba(234, 213, 193, 0.02);">
-            <h3 style="margin: 0 0 6px 0; font-size: 14px; color: #ead5c1; text-transform: uppercase;">Decentralized Ledger Protection</h3>
-            <p style="margin: 0; font-size: 13px; color: rgba(250,246,240,0.6); line-height: 1.5;">Omenala protocols utilize cryptographic proof. Always verify you are executing connections over secure socket layers explicitly on `omenalaweb3.com` before authenticating signature calls.</p>
-          </div>
-
-        </div>
-
-        <!-- RIGHT: Live Token Interacting Swap Station -->
-        <div class="glass-card" style="width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 16px;">
-          <div>
-            <h2 style="font-size: 16px; text-transform: uppercase; text-align: center; color: #ead5c1; letter-spacing: 0.05em; margin: 0 0 4px 0; font-weight: bold;">
-              SECURED TRADING BLOCK
-            </h2>
-            <div style="font-size: 11px; text-align: center; color: rgba(250,246,240,0.4); font-family: monospace;">POWERED BY JUPITER WEB3 AGGREGATOR</div>
-          </div>
-          
-          <!-- The live injected trade application context container hook -->
-          <div id="integrated-terminal"></div>
-        </div>
-
-      </div>
-
     </div>
+    <div id="integrated-terminal"></div>
   </div>
-
+  <script>
+    const TOKEN_MINT = "AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
+    function calculateIgboMarketDay() {
+      const days = ['eke', 'orie', 'afor', 'nkwo'];
+      const deltaDays = Math.floor((Date.now() - 1704067200000) / (86400000));
+      const activeIndex = ((deltaDays % 4) + 4) % 4;
+      days.forEach((day, index) => {
+        const badge = document.getElementById(`badge-${day}`);
+        if (badge) {
+          badge.innerText = index === activeIndex ? "ACTIVE" : "LOCKED";
+          badge.className = `market-badge ${index === activeIndex ? 'active-day' : 'inactive-day'}`;
+        }
+      });
+    }
+    function initJupiter() {
+      if (window.Jupiter) window.Jupiter.init({ displayMode: "integrated", integratedTargetId: "integrated-terminal", mint: TOKEN_MINT, theme: "dark" });
+    }
+    window.addEventListener('jupiterTerminalReady', initJupiter);
+    setTimeout(initJupiter, 2500);
+    calculateIgboMarketDay();
+  </script>
+</body>
+</html>
