@@ -397,27 +397,80 @@ Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/
 :-moz-ui-invalid {
   box-shadow: none;
 }
-
-/*
-Add the correct vertical alignment in Chrome and Firefox.
-*/
-
-progress {
-  vertical-align: baseline;
+// ROBUST WALLET CONNECT - Phantom + Solflare + Backpack + Mobile
+async function connectWallet() {
+    const btn = document.getElementById("walletText");
+    const btnBox = document.getElementById("walletBtn");
+    
+    // Check all wallets
+    let wallet = null;
+    let walletName = "";
+    
+    if (window.solana && window.solana.isPhantom) {
+        wallet = window.solana;
+        walletName = "Phantom";
+    } else if (window.solflare && window.solflare.isSolflare) {
+        wallet = window.solflare;
+        walletName = "Solflare";
+    } else if (window.backpack) {
+        wallet = window.backpack;
+        walletName = "Backpack";
+    } else if (window.solana) { // Some wallets inject as window.solana
+        wallet = window.solana;
+        walletName = "Solana Wallet";
+    }
+    
+    if (wallet) {
+        try {
+            btn.textContent = "Connecting...";
+            const resp = await wallet.connect();
+            const pubKey = resp.publicKey.toString();
+            // Show truncated: 85do...sMU6
+            btn.textContent = pubKey.slice(0,4) + "..." + pubKey.slice(-4) + " (" + walletName + ")";
+            if(btnBox) btnBox.classList.add("border-green-500","text-green-400");
+            localStorage.setItem('omenala_wallet', pubKey);
+            localStorage.setItem('omenala_wallet_name', walletName);
+            
+            // Update Top 10 Tribe if you have that element
+            const pointsEl = document.querySelector("[id='walletPoints']");
+            if(pointsEl) pointsEl.textContent = "1 ⭐ Connected!";
+            
+            console.log("✅ Connected to " + walletName + ": " + pubKey);
+            return;
+        } catch (err) {
+            console.log("Wallet connection rejected:", err);
+            btn.textContent = "Connect Wallet";
+            alert("Connection rejected. Please try again!");
+            return;
+        }
+    }
+    
+    // NO WALLET FOUND - Help user
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        alert("📱 On mobile? Open this site INSIDE Phantom app!\n\n1. Open Phantom App\n2. Tap Browser (🌐) at bottom\n3. Type: omenalaweb3.com\n4. Then Connect Wallet will work!");
+    } else {
+        // Desktop - no extension
+        if(confirm("No Solana wallet found! Install Phantom?\n\nClick OK to go to phantom.app\nCancel to stay here.")) {
+            window.open("https://phantom.app/", "_blank");
+        }
+    }
+    btn.textContent = "Connect Phantom";
 }
 
-/*
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
-
-::-webkit-inner-spin-button,
-::-webkit-outer-spin-button {
-  height: auto;
-}
-
-/*
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
+// Auto-restore wallet on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('omenala_wallet');
+    const savedName = localStorage.getItem('omenala_wallet_name') || "Phantom";
+    if(saved) {
+        const btn = document.getElementById("walletText");
+        if(btn) {
+            btn.textContent = saved.slice(0,4) + "..." + saved.slice(-4) + " (" + savedName + ")";
+            const btnBox = document.getElementById("walletBtn");
+            if(btnBox) btnBox.classList.add("border-green-500","text-green-400");
+        }
+    }
+});
 */
 
 [type='search'] {
