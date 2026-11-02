@@ -13,18 +13,21 @@
     .inactive-day { background: rgba(255, 255, 255, 0.05); color: rgba(250, 246, 240, 0.4); }
     .market-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: rgba(0, 0, 0, 0.15); border-radius: 12px; margin-bottom: 12px; }
     #integrated-terminal { width: 100%; height: 520px; background: rgba(0, 0, 0, 0.3); border-radius: 18px; }
+    header button { border: 2px solid #ead5c1; background: transparent; color: #ead5c1; padding: 8px 16px; border-radius: 9999px; cursor: pointer; font-weight: bold; font-size: 13px; }
   </style>
 </head>
 <body>
-  <header style="position: fixed; top: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(45, 5, 15, 0.9); z-index: 1000; box-sizing: border-box;">
-    <span>OMENALA WEB3</span>
+  <header style="position: fixed; top: 0; left: 0; width: 100%; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(45, 5, 15, 0.9); z-index: 1000; box-sizing: border-box;">
+    <span style="font-weight: bold; color: #ead5c1;">OMENALA WEB3</span>
     <button id="connect-btn">CONNECT WALLET</button>
   </header>
-  <div style="padding: 110px 24px 64px 24px; max-width: 1200px; margin: 0 auto;">
+  
+  <div style="padding: 110px 24px 64px 24px; max-width: 1200px; margin: 0 auto; box-sizing: border-box; width: 100%;">
     <h1>Preserving Culture Through <em>Decentralization</em></h1>
-    <p>Welcome to Omenala, bridging ancestral systems with Web3 protocols.</p>
+    <p style="margin-bottom: 32px; color: rgba(250, 246, 240, 0.7);">Welcome to Omenala, bridging ancestral systems with Web3 protocols.</p>
+    
     <div class="glass-card">
-      <h2>AFAMEFULA: THE FOUR MARKET DAYS</h2>
+      <h2 style="color: #ead5c1; font-size: 18px; margin-top: 0;">AFAMEFULA: THE FOUR MARKET DAYS</h2>
       <div id="market-days-container">
         <div class="market-row"><strong>EKE</strong><span class="market-badge" id="badge-eke">Loading</span></div>
         <div class="market-row"><strong>ORIE</strong><span class="market-badge" id="badge-orie">Loading</span></div>
@@ -32,10 +35,13 @@
         <div class="market-row"><strong>NKWO</strong><span class="market-badge" id="badge-nkwo">Loading</span></div>
       </div>
     </div>
+    
     <div id="integrated-terminal"></div>
   </div>
+
   <script>
     const TOKEN_MINT = "AR4enFoN9vE1v6H2qV5t9X7pL3mK8qR2wT1yU6i89xpump";
+    
     function calculateIgboMarketDay() {
       const days = ['eke', 'orie', 'afor', 'nkwo'];
       const deltaDays = Math.floor((Date.now() - 1704067200000) / (86400000));
@@ -48,9 +54,40 @@
         }
       });
     }
+
     function initJupiter() {
-      if (window.Jupiter) window.Jupiter.init({ displayMode: "integrated", integratedTargetId: "integrated-terminal", mint: TOKEN_MINT, theme: "dark" });
+      if (window.Jupiter && document.getElementById('integrated-terminal')) {
+        window.Jupiter.init({ 
+          displayMode: "integrated", 
+          integratedTargetId: "integrated-terminal", 
+          mint: TOKEN_MINT, 
+          theme: "dark" 
+        });
+      }
     }
+
+    // Wallet Connectivity Core Logic
+    document.getElementById('connect-btn').addEventListener('click', async () => {
+      const provider = window?.solana || window?.phantom?.solana;
+      
+      if (provider) {
+        try {
+          const res = await provider.connect();
+          const addr = res.publicKey.toString();
+          document.getElementById('connect-btn').innerText = `${addr.slice(0, 4)}...${addr.slice(-4)}`;
+        } catch (err) {
+          console.error("User rejected connection authorization framework:", err);
+        }
+      } else {
+        const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+        if (isMobile) {
+          window.location.href = "https://phantom.app";
+        } else {
+          alert("Please install Phantom or another compatible Web3 wallet extension.");
+        }
+      }
+    });
+
     window.addEventListener('jupiterTerminalReady', initJupiter);
     setTimeout(initJupiter, 2500);
     calculateIgboMarketDay();
