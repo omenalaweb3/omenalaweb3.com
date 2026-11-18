@@ -76,7 +76,61 @@ input,textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px
 <p style="text-align:center;">Series 2 Coming: Market Days | Series 3 Coming: 60 Proverbs</p>
 </div>
 </section>
+<!-- OMENALA ADAGES + TRANSLATOR -->
+<section style="padding:30px 15px;max-width:900px;margin:auto;">
+<h2 style="text-align:center;">🗣️ Igbo Adages — Omenala Proverbs</h2>
+<p style="text-align:center;">Our elders spoke in proverbs. Each adage is a whole lesson.</p>
 
+<div class="card"><b>1. Onye ajụrụ aju anaghị aju onwe ya</b><br><i>English: He who is rejected by others has not rejected himself.</i><br>Meaning: Even if people reject you, don't reject yourself. Keep building.</div>
+<div class="card"><b>2. Ofo na Ogu anaghị egbu onye aka dị ọcha</b><br><i>English: Ofo and Ogu do not kill a person with clean hands.</i><br>Meaning: Truth protects the innocent. If your hands are clean, you will win.</div>
+<div class="card"><b>3. Ebe onye dara ka chi ya kwaturu ya</b><br><i>English: Where a person falls, his chi pushed him.</i><br>Meaning: Every fall has a spiritual lesson. Learn and rise.</div>
+<div class="card"><b>4. Onye kwe, chi ya ekwe</b><br><i>English: When a person agrees, his chi agrees.</i><br>Meaning: If you believe, your spirit will support you.</div>
+<div class="card"><b>5. Igwe bu ike</b><br><i>English: Unity is strength.</i><br>Meaning: Together we are strong. Omenala is community.</div>
+<div class="card"><b>6. Oji anaghị apụ n'ọnụ onye ji ya</b><br><i>English: Kola nut does not leave the mouth of the holder.</i><br>Meaning: Peace starts with you. Hold peace like Oji.</div>
+<div class="card"><b>7. Nwata kwuo eziokwu, a na-azọpụta ya</b><br><i>English: A child who speaks truth is saved.</i><br>Meaning: Truth saves you, even if you are small.</div>
+<div class="card"><b>8. Ala anaghị ajụ onye na-aga n'ihu</b><br><i>English: The Earth does not reject one who moves forward.</i><br>Meaning: Keep moving. Ala supports those who move.</div>
+<div class="card"><b>9. Omenala ka ego</b><br><i>English: Culture is greater than money.</i><br>Meaning: Money finishes, culture remains. That's why we build $OMENALA.</div>
+<div class="card"><b>10. Mmụọ na-achị ihe niile</b><br><i>English: Spirit controls all things.</i><br>Meaning: Mmuo is head of all. Spirit is above market days, above elements.</div>
+
+<h3 style="text-align:center;margin-top:30px;">🔤 Small Igbo Translator</h3>
+<p style="text-align:center;">Type an Igbo word, tap Translate:</p>
+<div style="text-align:center;">
+<input id="igboInput" placeholder="Type e.g. Ofo, Ala, Mmuo, Eke" style="padding:12px;width:80%;max-width:400px;border-radius:10px;border:1px solid #D4A017;background:#111;color:#fff;">
+<br><br>
+<button onclick="translateIgbo()" style="background:#FFD700;color:#000;padding:12px 25px;border:none;border-radius:10px;font-weight:bold;">Translate</button>
+<p id="igboResult" style="margin-top:15px;font-weight:bold;"></p>
+</div>
+</section>
+<script>
+function translateIgbo(){
+var w = document.getElementById('igboInput').value.toLowerCase().trim();
+var dict = {
+"ofo":"Ofo = Staff of Truth / Justice",
+"ogu":"Ogu = Eagle Feather of Innocence",
+"ala":"Ala = Mother Earth, Land",
+"mmuo":"Mmuo = Spirit, Head of All",
+"eke":"Eke = Market Day, Fire, East, Creation",
+"orie":"Orie = Market Day, Water, West, Healing",
+"afo":"Afo = Market Day, Earth, North, Wisdom",
+"nkwo":"Nkwo = Market Day, Air, South, Prosperity",
+"oji":"Oji = Kola Nut of Peace",
+"igwe":"Igwe = Unity / Multitude",
+"chi":"Chi = Personal Spirit / Destiny",
+"omenala":"Omenala = Culture, Custom, Tradition",
+"eze":"Eze = King",
+"umuada":"Umuada = Daughters of the Family",
+"nze":"Nze = Titled Elder",
+"ikpe":"Ikpe = Judgment",
+"nsibidi":"Nsibidi = Sacred Writing",
+"anyanwu":"Anyanwu = Sun",
+"mmiri":"Mmiri = Water",
+"ani":"Ani = Earth / Land",
+"ikuku":"Ikuku = Air / Wind"
+};
+document.getElementById('igboResult').innerText = dict[w] || "Not in small dictionary yet. Try: Ofo, Ala, Mmuo, Eke, Orie, Afo, Nkwo, Oji, Chi, Omenala";
+}
+</script>
+<!-- END ADAGES -->
 <!-- MARKET DAYS -->
 <section id="market-days">
 <h2>📅 Igbo Market Days — Four Elements</h2>
