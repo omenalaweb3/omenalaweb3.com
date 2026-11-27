@@ -742,6 +742,80 @@ document.getElementById('igboResult').innerText = dict[w] || "Not in small dicti
   }
 </script>
 <!-- END SOUNDBOARD -->
+  <!-- OMENALA DIGITAL "OBI" (VILLAGE SQUARE) GUESTBOOK -->
+<div id="omenala-obi-guestbook" style="max-width: 680px; margin: 30px auto; background: #121212; border: 1px solid #d4af37; border-radius: 12px; padding: 25px; color: #f5f5f5; font-family: system-ui, -apple-system, sans-serif;">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <span style="background: #d4af37; color: #121212; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Igwe Bu Ike • Community</span>
+    <h2 style="color: #d4af37; margin: 10px 0 5px;">The Digital Obi — Village Square Wall</h2>
+    <p style="color: #aaaaaa; font-size: 14px; margin: 0;">Break Oji with Ndi Igbo across the world. Sign your name, hometown, and blessing.</p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <input type="text" id="obi-name" placeholder="Your Name (e.g., Chinedu)" style="flex: 1; min-width: 180px; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 14px;">
+      <input type="text" id="obi-town" placeholder="Town / State (e.g., Ogui Nike, Enugu)" style="flex: 1; min-width: 180px; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 14px;">
+    </div>
+    <select id="obi-blessing" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 14px;">
+      <option value="🥥 Oji eze di eze n'aka! (May peace and wisdom reign in Omenala)">🥥 Oji eze di eze n'aka! (May peace and wisdom reign)</option>
+      <option value="⚖️ Ofo na Ogu ga-echebe anyi! (Truth and Justice will protect us)">⚖️ Ofo na Ogu ga-echebe anyi! (Truth & Justice will protect us)</option>
+      <option value="🌍 Ala gozie ndi na-eme eziokwu! (May Mother Earth bless the truthful)">🌍 Ala gozie ndi na-eme eziokwu! (May Ala bless the truthful)</option>
+      <option value="🔥 Egbe bere, ugo bere! (Live and let live — Prosperity to all)">🔥 Egbe bere, ugo bere! (Live and let live — Prosperity to all)</option>
+    </select>
+    <button onclick="signObiWall()" style="background: #d4af37; color: #121212; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px;">🥥 Break Oji & Sign the Obi Wall</button>
+  </div>
+
+  <div id="obi-entries-list" style="display: flex; flex-direction: column; gap: 12px; max-height: 360px; overflow-y: auto; padding-right: 5px;"></div>
+</div>
+
+<script>
+  const defaultObiEntries = [
+    { name: "Abel Livingsaint", town: "Enugu, Igboland", blessing: "⚖️ Ofo na Ogu ga-echebe anyi! (Truth & Justice will protect us)", time: "Founder • Omenala Web3" },
+    { name: "Adaeze N.", town: "Onitsha, Anambra", blessing: "🥥 Oji eze di eze n'aka! (May peace and wisdom reign)", time: "Orie Market Day" },
+    { name: "Obinna K.", town: "Owerri, Imo", blessing: "🔥 Egbe bere, ugo bere! (Live and let live — Prosperity to all)", time: "Nkwo Market Day" }
+  ];
+
+  function loadObiEntries() {
+    const saved = JSON.parse(localStorage.getItem("omenala_obi_entries")) || [];
+    const allEntries = [...saved, ...defaultObiEntries];
+    const listDiv = document.getElementById("obi-entries-list");
+    listDiv.innerHTML = "";
+    allEntries.forEach(entry => {
+      const card = document.createElement("div");
+      card.style.cssText = "background: #1a1a1a; border-left: 3px solid #d4af37; padding: 12px 15px; border-radius: 8px;";
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <strong style="color: #d4af37; font-size: 15px;">${escapeHTML(entry.name)} <span style="color: #999; font-weight: normal; font-size: 13px;">• ${escapeHTML(entry.town)}</span></strong>
+          <span style="font-size: 11px; color: #777;">${escapeHTML(entry.time)}</span>
+        </div>
+        <p style="margin: 0; font-size: 14px; color: #e5e5e5;">${escapeHTML(entry.blessing)}</p>
+      `;
+      listDiv.appendChild(card);
+    });
+  }
+
+  function signObiWall() {
+    const name = document.getElementById("obi-name").value.trim();
+    const town = document.getElementById("obi-town").value.trim();
+    const blessing = document.getElementById("obi-blessing").value;
+    if (!name || !town) {
+      alert("Please enter your name and hometown to break Oji.");
+      return;
+    }
+    const saved = JSON.parse(localStorage.getItem("omenala_obi_entries")) || [];
+    saved.unshift({ name, town, blessing, time: "Just now" });
+    localStorage.setItem("omenala_obi_entries", JSON.stringify(saved));
+    document.getElementById("obi-name").value = "";
+    document.getElementById("obi-town").value = "";
+    loadObiEntries();
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]));
+  }
+
+  loadObiEntries();
+</script>
+<!-- END OBI GUESTBOOK -->
 <!-- MARKET DAYS -->
 <section id="market-days">
 <h2>📅 Igbo Market Days — Four Elements</h2>
