@@ -669,6 +669,79 @@ document.getElementById('igboResult').innerText = dict[w] || "Not in small dicti
   drawNameCard();
 </script>
 <!-- END NAME CARD -->
+  <!-- OMENALA SERIES 4: IGBO MUSICAL INSTRUMENTS SOUNDBOARD -->
+<div id="omenala-soundboard" style="max-width: 700px; margin: 30px auto; background: #121212; border: 1px solid #d4af37; border-radius: 12px; padding: 25px; color: #f5f5f5; font-family: system-ui, -apple-system, sans-serif;">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <span style="background: #d4af37; color: #121212; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Series 4 • Pre-Colonial Sound</span>
+    <h2 style="color: #d4af37; margin: 10px 0 5px;">Igbo Musical Instruments Soundboard</h2>
+    <p style="color: #aaaaaa; font-size: 14px; margin: 0;">Tap any instrument to play its traditional acoustic tone.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+    <button onclick="playInstrument('ikoro')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🪵</div><strong style="color: #d4af37; display: block; margin-top: 5px;">1. IKORO</strong><span style="font-size: 12px; color: #bbb;">Giant Slit Drum</span></button>
+    <button onclick="playInstrument('udu')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🏺</div><strong style="color: #d4af37; display: block; margin-top: 5px;">2. UDU</strong><span style="font-size: 12px; color: #bbb;">Clay Pot Drum</span></button>
+    <button onclick="playInstrument('oja')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🎶</div><strong style="color: #d4af37; display: block; margin-top: 5px;">3. OJA</strong><span style="font-size: 12px; color: #bbb;">Talking Flute</span></button>
+    <button onclick="playInstrument('ekwe')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🪘</div><strong style="color: #d4af37; display: block; margin-top: 5px;">4. EKWE</strong><span style="font-size: 12px; color: #bbb;">Secret Slit Gong</span></button>
+    <button onclick="playInstrument('ogene')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🔔</div><strong style="color: #d4af37; display: block; margin-top: 5px;">5. OGENE</strong><span style="font-size: 12px; color: #bbb;">Twin Iron Gong</span></button>
+    <button onclick="playInstrument('igba')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🥁</div><strong style="color: #d4af37; display: block; margin-top: 5px;">6. IGBA</strong><span style="font-size: 12px; color: #bbb;">Royal Drum</span></button>
+    <button onclick="playInstrument('ichaka')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">📿</div><strong style="color: #d4af37; display: block; margin-top: 5px;">7. ICHAKA</strong><span style="font-size: 12px; color: #bbb;">Beaded Rattle</span></button>
+    <button onclick="playInstrument('ubo')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🎹</div><strong style="color: #d4af37; display: block; margin-top: 5px;">8. UBO AKA</strong><span style="font-size: 12px; color: #bbb;">Thumb Piano</span></button>
+    <button onclick="playInstrument('ngelenge')" style="background: #1e1e1e; border: 1px solid #d4af37; color: #fff; padding: 15px; border-radius: 10px; cursor: pointer; text-align: center;"><div style="font-size: 24px;">🎼</div><strong style="color: #d4af37; display: block; margin-top: 5px;">9. NGELENGE</strong><span style="font-size: 12px; color: #bbb;">Xylophone (1 of 1)</span></button>
+  </div>
+  <p id="instrument-status" style="text-align: center; color: #d4af37; font-size: 14px; margin-top: 18px; min-height: 20px;"></p>
+</div>
+<script>
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  let audioCtx;
+  function playInstrument(type) {
+    if (!audioCtx) audioCtx = new AudioCtx();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const now = audioCtx.currentTime;
+    const status = document.getElementById("instrument-status");
+    const descriptions = {
+      ikoro: "🪵 IKORO: Deep wooden war & community summons resonance.",
+      udu: "🏺 UDU: Hollow clay pot bass thump with air chamber echo.",
+      oja: "🎶 OJA: High-pitched talking flute call praising the brave.",
+      ekwe: "🪘 EKWE: Sharp dual-tone wooden slit gong rhythm.",
+      ogene: "🔔 OGENE: Bright metallic twin iron bell strike.",
+      igba: "🥁 IGBA: Energetic royal membrane drum beat.",
+      ichaka: "📿 ICHAKA: Crisp gourd & beaded shaker pulse.",
+      ubo: "🎹 UBO AKA: Warm plucked metal lamellae melody.",
+      ngelenge: "🎼 NGELENGE: Cascading wooden xylophone notes."
+    };
+    status.textContent = descriptions[type];
+    if (type === "ikoro") { triggerTone(85, 55, "triangle", 0.6, 0.9, now); }
+    else if (type === "udu") { triggerTone(130, 65, "sine", 0.45, 0.9, now); }
+    else if (type === "oja") { triggerTone(880, 1046, "sine", 0.25, 0.4, now); triggerTone(1046, 784, "sine", 0.35, 0.4, now + 0.22); }
+    else if (type === "ekwe") { triggerTone(260, 220, "triangle", 0.25, 0.7, now); triggerTone(340, 300, "triangle", 0.25, 0.7, now + 0.18); }
+    else if (type === "ogene") { triggerTone(620, 615, "sine", 0.5, 0.6, now); triggerTone(930, 925, "sine", 0.4, 0.4, now + 0.2); }
+    else if (type === "igba") { triggerTone(180, 90, "sine", 0.35, 0.8, now); }
+    else if (type === "ichaka") { triggerNoise(0.2, now); }
+    else if (type === "ubo") { triggerTone(392, 390, "sine", 0.5, 0.5, now); triggerTone(523, 520, "sine", 0.5, 0.5, now + 0.15); }
+    else if (type === "ngelenge") { [523, 587, 659, 784].forEach((freq, i) => { triggerTone(freq, freq, "triangle", 0.3, 0.5, now + i * 0.12); }); }
+  }
+  function triggerTone(startFreq, endFreq, wave, duration, vol, startTime) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = wave;
+    osc.frequency.setValueAtTime(startFreq, startTime);
+    osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + duration);
+    gain.gain.setValueAtTime(vol, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(startTime); osc.stop(startTime + duration);
+  }
+  function triggerNoise(duration, startTime) {
+    const bufferSize = audioCtx.sampleRate * duration;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+    const noise = audioCtx.createBufferSource(); noise.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter(); filter.type = "highpass"; filter.frequency.value = 2500;
+    const gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.4, startTime); gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+    noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination); noise.start(startTime);
+  }
+</script>
+<!-- END SOUNDBOARD -->
 <!-- MARKET DAYS -->
 <section id="market-days">
 <h2>📅 Igbo Market Days — Four Elements</h2>
