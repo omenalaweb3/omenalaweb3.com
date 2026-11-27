@@ -816,6 +816,103 @@ document.getElementById('igboResult').innerText = dict[w] || "Not in small dicti
   loadObiEntries();
 </script>
 <!-- END OBI GUESTBOOK -->
+  <!-- OMENALA SOLANA WALLET & ELDER BADGE CHECKER -->
+<div id="omenala-wallet-checker" style="max-width: 680px; margin: 30px auto; background: #121212; border: 1px solid #d4af37; border-radius: 12px; padding: 25px; color: #f5f5f5; font-family: system-ui, -apple-system, sans-serif;">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <span style="background: #d4af37; color: #121212; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">On-Chain Verification</span>
+    <h2 style="color: #d4af37; margin: 10px 0 5px;">Omenala Elder Badge & $OMENALA Checker</h2>
+    <p style="color: #aaaaaa; font-size: 14px; margin: 0;">Connect Phantom or paste your Solana public address to check your $OMENALA balance and holder status.</p>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;">
+    <button onclick="connectPhantomWallet()" style="background: #ab9ff2; color: #121212; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px;">👻 Connect Phantom Wallet (Read-Only)</button>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <input type="text" id="sol-address-input" placeholder="Or paste your Solana public wallet address..." style="flex: 1; min-width: 220px; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 14px;">
+      <button onclick="checkSolanaWallet()" style="background: #d4af37; color: #121212; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">Check Status</button>
+    </div>
+  </div>
+  <div id="wallet-result-box" style="display: none; background: #1a1a1a; border: 1px solid #d4af37; border-radius: 10px; padding: 18px; margin-top: 15px;">
+    <p style="font-size: 13px; color: #aaa; margin: 0 0 8px;">Wallet: <strong id="display-wallet-addr" style="color: #fff;"></strong></p>
+    <h3 id="holder-badge-title" style="color: #d4af37; margin: 0 0 10px; font-size: 20px;"></h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+      <div style="background: #121212; padding: 12px; border-radius: 8px; border: 1px solid #333;">
+        <span style="font-size: 12px; color: #999; display: block;">$OMENALA Balance</span>
+        <strong id="omenala-token-bal" style="font-size: 18px; color: #40916c;">0</strong>
+      </div>
+      <div style="background: #121212; padding: 12px; border-radius: 8px; border: 1px solid #333;">
+        <span style="font-size: 12px; color: #999; display: block;">Total Wallet Collectibles</span>
+        <strong id="wallet-nft-count" style="font-size: 18px; color: #d4af37;">0</strong>
+      </div>
+    </div>
+    <p style="font-size: 13px; color: #ccc; margin-bottom: 15px;"><strong>Reward Guide:</strong> Hold 1 Series 1 NFT = 1,000 $OMENALA + Elder Badge | Hold 1 Series 5 NFT = 500 $OMENALA + Mmanwu Elder Badge | Hold all 10 Series 5 = 5,000 $OMENALA + Supreme Mmanwu King Badge.</p>
+    <a id="telegram-claim-link" href="https://t.me/Omenalasol" target="_blank" style="display: block; text-align: center; background: #d4af37; color: #121212; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px;">Claim Airdrop & Badge on Telegram →</a>
+  </div>
+  <p id="wallet-error-msg" style="color: #ff6b6b; font-size: 13px; text-align: center; margin-top: 10px; display: none;"></p>
+</div>
+<script>
+  const OMENALA_MINT = "AR4enFoN6aaCdrhAkA1gL7kWXckRhbPFPpRmk89xpump";
+  const SOLANA_RPC = "https://api.mainnet-beta.solana.com";
+  async function connectPhantomWallet() {
+    const errBox = document.getElementById("wallet-error-msg");
+    errBox.style.display = "none";
+    if (window.solana && window.solana.isPhantom) {
+      try {
+        const resp = await window.solana.connect();
+        const pubKey = resp.publicKey.toString();
+        document.getElementById("sol-address-input").value = pubKey;
+        checkSolanaWallet();
+      } catch (err) {
+        errBox.textContent = "Wallet connection cancelled.";
+        errBox.style.display = "block";
+      }
+    } else {
+      errBox.textContent = "Phantom wallet extension not detected. Paste your public address above instead.";
+      errBox.style.display = "block";
+    }
+  }
+  async function checkSolanaWallet() {
+    const address = document.getElementById("sol-address-input").value.trim();
+    const errBox = document.getElementById("wallet-error-msg");
+    const resBox = document.getElementById("wallet-result-box");
+    errBox.style.display = "none";
+    if (address.length < 32 || address.length > 44) {
+      errBox.textContent = "Please enter a valid Solana public wallet address.";
+      errBox.style.display = "block";
+      return;
+    }
+    document.getElementById("display-wallet-addr").textContent = address.slice(0, 6) + "..." + address.slice(-6);
+    document.getElementById("holder-badge-title").textContent = "Scanning Solana Blockchain...";
+    resBox.style.display = "block";
+    try {
+      const response = await fetch(SOLANA_RPC, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "getTokenAccountsByOwner", params: [address, { programId: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" }, { encoding: "jsonParsed" }] })
+      });
+      const data = await response.json();
+      const accounts = data.result?.value || [];
+      let omenalaBalance = 0;
+      let nftCount = 0;
+      accounts.forEach(acc => {
+        const info = acc.account.data.parsed.info;
+        const mint = info.mint;
+        const amount = info.tokenAmount.uiAmount || 0;
+        const decimals = info.tokenAmount.decimals;
+        if (mint === OMENALA_MINT) { omenalaBalance = amount; }
+        else if (decimals === 0 && amount === 1) { nftCount++; }
+      });
+      document.getElementById("omenala-token-bal").textContent = omenalaBalance.toLocaleString() + " $OMENALA";
+      document.getElementById("wallet-nft-count").textContent = nftCount + " NFTs";
+      if (nftCount >= 10) { document.getElementById("holder-badge-title").textContent = "👑 Chief Justice / Supreme Mmanwu King"; }
+      else if (nftCount >= 1 || omenalaBalance > 0) { document.getElementById("holder-badge-title").textContent = "🛡 Omenala Elder & Culture Holder"; }
+      else { document.getElementById("holder-badge-title").textContent = "🌱 Omenala Visitor (Mint an NFT to earn your Elder Badge!)"; }
+    } catch (e) {
+      document.getElementById("holder-badge-title").textContent = "🛡 Ready for Telegram Verification";
+      document.getElementById("omenala-token-bal").textContent = "Check on Solscan";
+      document.getElementById("wallet-nft-count").textContent = "Verify in TG";
+    }
+  }
+</script>
+<!-- END WALLET CHECKER -->
 <!-- MARKET DAYS -->
 <section id="market-days">
 <h2>📅 Igbo Market Days — Four Elements</h2>
