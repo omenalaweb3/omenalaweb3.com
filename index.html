@@ -552,6 +552,123 @@ document.getElementById('igboResult').innerText = dict[w] || "Not in small dicti
   loadQuestion();
 </script>
 <!-- END QUIZ -->
+  <!-- OMENALA IGBO NAME & DESTINY CARD GENERATOR -->
+<div id="omenala-name-finder" style="max-width: 650px; margin: 30px auto; background: #121212; border: 1px solid #d4af37; border-radius: 12px; padding: 25px; color: #f5f5f5; font-family: system-ui, -apple-system, sans-serif;">
+  <div style="text-align: center; margin-bottom: 20px;">
+    <span style="background: #d4af37; color: #121212; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">Aha Bu Chi • Destiny</span>
+    <h2 style="color: #d4af37; margin: 10px 0 5px;">Igbo Name & Meaning Card</h2>
+    <p style="color: #aaaaaa; font-size: 14px; margin: 0;">Search an Igbo name or enter yours to create a shareable Omenala card.</p>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+    <input type="text" id="igbo-name-input" placeholder="Type an Igbo name (e.g., Chukwuemeka, Ngozi, Obinna, Adaeze)..." oninput="lookupIgboName()" style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 15px;">
+    <input type="text" id="igbo-meaning-input" placeholder="Meaning (auto-fills if found, or type your own)..." oninput="drawNameCard()" style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 8px; border: 1px solid #444; background: #1e1e1e; color: #fff; font-size: 14px;">
+  </div>
+
+  <div style="text-align: center; margin-bottom: 15px;">
+    <canvas id="nameCardCanvas" width="600" height="340" style="max-width: 100%; border-radius: 10px; border: 1px solid #d4af37; box-shadow: 0 4px 15px rgba(0,0,0,0.6);"></canvas>
+  </div>
+
+  <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+    <button onclick="downloadNameCard()" style="background: #d4af37; color: #121212; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px;">⬇ Download Graphic Card</button>
+    <a id="share-name-x" target="_blank" style="background: #1DA1F2; color: #ffffff; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 14px;">Share on X</a>
+  </div>
+</div>
+
+<script>
+  const igboNamesDB = {
+    "chukwuemeka": "God has done great things.",
+    "ngozi": "Blessing.",
+    "obinna": "Father's heart.",
+    "adaeze": "Daughter of the King.",
+    "chinedu": "God leads.",
+    "amaka": "So beautiful / Good.",
+    "ifeanyi": "Nothing is impossible with God.",
+    "chinenye": "God gives.",
+    "uzoma": "The good road / Safe journey.",
+    "chidimma": "God is good.",
+    "nnamdi": "My father is alive.",
+    "ebuka": "God is great.",
+    "kosisochukwu": "As it pleases God.",
+    "somtochukwu": "Join me in praising God.",
+    "chioma": "Good God / Good spirit.",
+    "ekene": "Praise / Thanksgiving.",
+    "uche": "Wisdom / Mind / Will.",
+    "ikechukwu": "Power of God.",
+    "oluchi": "God's work.",
+    "ziora": "Show the people."
+  };
+
+  function lookupIgboName() {
+    const rawName = document.getElementById("igbo-name-input").value.trim();
+    const key = rawName.toLowerCase();
+    const meaningInput = document.getElementById("igbo-meaning-input");
+    if (igboNamesDB[key]) {
+      meaningInput.value = igboNamesDB[key];
+    }
+    drawNameCard();
+  }
+
+  function drawNameCard() {
+    const canvas = document.getElementById("nameCardCanvas");
+    const ctx = canvas.getContext("2d");
+    const nameVal = document.getElementById("igbo-name-input").value.trim() || "CHUKWUEMEKA";
+    const meaningVal = document.getElementById("igbo-meaning-input").value.trim() || "God has done great things.";
+    const grad = ctx.createLinearGradient(0, 0, 600, 340);
+    grad.addColorStop(0, "#111111");
+    grad.addColorStop(0.5, "#1f190e");
+    grad.addColorStop(1, "#0d0d0d");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 600, 340);
+    ctx.strokeStyle = "#d4af37";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(14, 14, 572, 312);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(22, 22, 556, 296);
+    ctx.fillStyle = "#d4af37";
+    ctx.font = "bold 14px system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("OMENALA WEB3 • IGBO HERITAGE", 300, 58);
+    ctx.fillStyle = "#ffffff";
+    let fontSize = 44;
+    ctx.font = `bold ${fontSize}px Georgia, serif`;
+    while (ctx.measureText(nameVal.toUpperCase()).width > 520 && fontSize > 24) {
+      fontSize -= 2;
+      ctx.font = `bold ${fontSize}px Georgia, serif`;
+    }
+    ctx.fillText(nameVal.toUpperCase(), 300, 145);
+    ctx.beginPath();
+    ctx.moveTo(180, 170);
+    ctx.lineTo(420, 170);
+    ctx.strokeStyle = "#d4af37";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = "#f0e6d2";
+    ctx.font = "italic 22px Georgia, serif";
+    let meaningText = `"${meaningVal}"`;
+    if (ctx.measureText(meaningText).width > 520) {
+      ctx.font = "italic 18px Georgia, serif";
+    }
+    ctx.fillText(meaningText, 300, 215);
+    ctx.fillStyle = "#aaaaaa";
+    ctx.font = "13px system-ui, sans-serif";
+    ctx.fillText("Your name carries your destiny • omenalaweb3.com • $OMENALA", 300, 295);
+    const tweetText = encodeURIComponent(`My Igbo name is ${nameVal.toUpperCase()} — "${meaningVal}"\n\nDiscover your Igbo name card at omenalaweb3.com @omenalacrypto $OMENALA`);
+    document.getElementById("share-name-x").href = `https://twitter.com/intent/tweet?text=${tweetText}`;
+  }
+
+  function downloadNameCard() {
+    const canvas = document.getElementById("nameCardCanvas");
+    const nameVal = document.getElementById("igbo-name-input").value.trim() || "Omenala";
+    const link = document.createElement("a");
+    link.download = `${nameVal.toLowerCase()}-omenala-card.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
+
+  drawNameCard();
+</script>
+<!-- END NAME CARD -->
 <!-- MARKET DAYS -->
 <section id="market-days">
 <h2>📅 Igbo Market Days — Four Elements</h2>
